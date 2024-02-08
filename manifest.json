@@ -1,0 +1,6 @@
+{
+  "namespace": "secondMod",
+  "icon": "assets/icon.png",
+  "setup": "setup.mjs",
+  "load": "assets/styles.css"
+}
