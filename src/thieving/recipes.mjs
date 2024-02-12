@@ -37,11 +37,11 @@ function diceUpgradeRecipes(ctx) {
           {
             id: "PolishedDice",
             level: 10,
-            productID: "secondMod:PolishedDice",
+            productID: "smattyThieving:PolishedDice",
             baseQuantity: 1,
             baseExperience: 20,
-            categoryID: "secondMod:Dice",
-            itemCosts: [{ id: "secondMod:ShoddyDice", quantity: 5 }],
+            categoryID: "smattyThieving:Dice",
+            itemCosts: [{ id: "smattyThieving:ShoddyDice", quantity: 5 }],
           },
         ],
       },
@@ -55,11 +55,11 @@ function diceUpgradeRecipes(ctx) {
           {
             id: "ShinyDice",
             level: 30,
-            productID: "secondMod:ShinyDice",
+            productID: "smattyThieving:ShinyDice",
             baseQuantity: 1,
             baseExperience: 75,
-            categoryID: "secondMod:Dice",
-            itemCosts: [{ id: "secondMod:PolishedDice", quantity: 5 }],
+            categoryID: "smattyThieving:Dice",
+            itemCosts: [{ id: "smattyThieving:PolishedDice", quantity: 5 }],
           },
         ],
       },
@@ -73,11 +73,11 @@ function diceUpgradeRecipes(ctx) {
           {
             id: "MasterDice",
             level: 65,
-            productID: "secondMod:MasterDice",
+            productID: "smattyThieving:MasterDice",
             baseQuantity: 1,
             baseExperience: 166,
-            categoryID: "secondMod:Dice",
-            itemCosts: [{ id: "secondMod:ShinyDice", quantity: 5 }],
+            categoryID: "smattyThieving:Dice",
+            itemCosts: [{ id: "smattyThieving:ShinyDice", quantity: 5 }],
           },
         ],
       },
@@ -97,12 +97,12 @@ function addDiceyRingRecipe(ctx) {
           {
             id: "DiceyRing",
             level: 15,
-            productID: "secondMod:DiceyRing",
+            productID: "smattyThieving:DiceyRing",
             baseQuantity: 1,
             baseExperience: 35,
-            categoryID: "secondMod:Dice",
+            categoryID: "smattyThieving:Dice",
             itemCosts: [
-              { id: "secondMod:PolishedDice", quantity: 5 },
+              { id: "smattyThieving:PolishedDice", quantity: 5 },
               { id: "melvorD:Gold_Bar", quantity: 5 },
             ],
           },
@@ -122,12 +122,12 @@ function addDiceyNecklaceRecipe(ctx) {
           {
             id: "DiceyNecklace",
             level: 20,
-            productID: "secondMod:DiceyNecklace",
+            productID: "smattyThieving:DiceyNecklace",
             baseQuantity: 1,
             baseExperience: 42,
-            categoryID: "secondMod:Dice",
+            categoryID: "smattyThieving:Dice",
             itemCosts: [
-              { id: "secondMod:PolishedDice", quantity: 5 },
+              { id: "smattyThieving:PolishedDice", quantity: 5 },
               { id: "melvorD:Gold_Bar", quantity: 5 },
             ],
           },
@@ -147,13 +147,13 @@ function addEliteDiceyRingRecipe(ctx) {
           {
             id: "EliteDiceyRing",
             level: 40,
-            productID: "secondMod:EliteDiceyRing",
+            productID: "smattyThieving:EliteDiceyRing",
             baseQuantity: 1,
             baseExperience: 111,
-            categoryID: "secondMod:Dice",
+            categoryID: "smattyThieving:Dice",
             itemCosts: [
-              { id: "secondMod:DiceyRing", quantity: 5 },
-              { id: "secondMod:ShinyDice", quantity: 5 },
+              { id: "smattyThieving:DiceyRing", quantity: 5 },
+              { id: "smattyThieving:ShinyDice", quantity: 5 },
             ],
           },
         ],
@@ -172,13 +172,13 @@ function addEliteDiceyNecklaceRecipe(ctx) {
           {
             id: "EliteDiceyNecklace",
             level: 45,
-            productID: "secondMod:EliteDiceyNecklace",
+            productID: "smattyThieving:EliteDiceyNecklace",
             baseQuantity: 1,
             baseExperience: 122,
-            categoryID: "secondMod:Dice",
+            categoryID: "smattyThieving:Dice",
             itemCosts: [
-              { id: "secondMod:DiceyNecklace", quantity: 5 },
-              { id: "secondMod:ShinyDice", quantity: 5 },
+              { id: "smattyThieving:DiceyNecklace", quantity: 5 },
+              { id: "smattyThieving:ShinyDice", quantity: 5 },
             ],
           },
         ],
@@ -197,13 +197,13 @@ function addUltraDiceyRingRecipe(ctx) {
           {
             id: "UltraDiceyRing",
             level: 70,
-            productID: "secondMod:UltraDiceyRing",
+            productID: "smattyThieving:UltraDiceyRing",
             baseQuantity: 1,
             baseExperience: 111,
-            categoryID: "secondMod:Dice",
+            categoryID: "smattyThieving:Dice",
             itemCosts: [
-              { id: "secondMod:EliteDiceyRing", quantity: 5 },
-              { id: "secondMod:MasterDice", quantity: 5 },
+              { id: "smattyThieving:EliteDiceyRing", quantity: 5 },
+              { id: "smattyThieving:MasterDice", quantity: 5 },
             ],
           },
         ],
@@ -222,13 +222,13 @@ function addUltraDiceyNecklaceRecipe(ctx) {
           {
             id: "UltraDiceyNecklace",
             level: 75,
-            productID: "secondMod:UltraDiceyNecklace",
+            productID: "smattyThieving:UltraDiceyNecklace",
             baseQuantity: 1,
             baseExperience: 122,
-            categoryID: "secondMod:Dice",
+            categoryID: "smattyThieving:Dice",
             itemCosts: [
-              { id: "secondMod:EliteDiceyNecklace", quantity: 5 },
-              { id: "secondMod:MasterDice", quantity: 5 },
+              { id: "smattyThieving:EliteDiceyNecklace", quantity: 5 },
+              { id: "smattyThieving:MasterDice", quantity: 5 },
             ],
           },
         ],
@@ -241,39 +241,39 @@ function addUltraDiceyNecklaceRecipe(ctx) {
 function addDiceyChargedUpgrades(ctx) {
   const diceyRingCharged = ctx.gameData.buildPackage((p) => {
     p.itemUpgrades.add({
-      upgradedItemID: "secondMod:DiceyRingCharged",
+      upgradedItemID: "smattyThieving:DiceyRingCharged",
       gpCost: 10000,
       scCost: 0,
       itemCosts: [
         {
-          id: "secondMod:DiceyRing",
+          id: "smattyThieving:DiceyRing",
           quantity: 1,
         },
         {
-          id: "secondMod:PolishedDice",
+          id: "smattyThieving:PolishedDice",
           quantity: 100,
         },
       ],
-      rootItemIDs: ["secondMod:DiceyRing"],
+      rootItemIDs: ["smattyThieving:DiceyRing"],
       isDowngrade: false,
     });
   });
   const diceyNecklaceCharged = ctx.gameData.buildPackage((p) => {
     p.itemUpgrades.add({
-      upgradedItemID: "secondMod:DiceyNecklaceCharged",
+      upgradedItemID: "smattyThieving:DiceyNecklaceCharged",
       gpCost: 10000,
       scCost: 0,
       itemCosts: [
         {
-          id: "secondMod:DiceyNecklace",
+          id: "smattyThieving:DiceyNecklace",
           quantity: 1,
         },
         {
-          id: "secondMod:PolishedDice",
+          id: "smattyThieving:PolishedDice",
           quantity: 100,
         },
       ],
-      rootItemIDs: ["secondMod:DiceyNecklace"],
+      rootItemIDs: ["smattyThieving:DiceyNecklace"],
       isDowngrade: false,
     });
   });

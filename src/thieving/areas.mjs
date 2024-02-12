@@ -13,13 +13,13 @@ async function addGamblingDen(ctx) {
             id: "GAMBLING_DEN",
             name: "Gambling Den",
             npcIDs: [
-              "secondMod:GAMBLER",
-              "secondMod:DEALER",
-              "secondMod:CARD_SHARK",
+              "smattyThieving:GAMBLER",
+              "smattyThieving:DEALER",
+              "smattyThieving:CARD_SHARK",
             ],
             uniqueDrops: [
               {
-                id: "secondMod:BagOfDice",
+                id: "smattyThieving:BagOfDice",
                 quantity: 1,
               },
             ],
@@ -34,7 +34,7 @@ async function addGamblingDen(ctx) {
 
 export async function addSyndicateSpyToLowTown() {
   const syndicateSpy = game.thieving.actions.getObjectByID(
-    "secondMod:SYNDICATE_SPY"
+    "smattyThieving:SYNDICATE_SPY"
   );
   if (syndicateSpy !== undefined) {
     game.thieving.areas.registeredObjects

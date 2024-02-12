@@ -19,25 +19,35 @@ export async function setup(ctx) {
   await thievingItemsModule.init(ctx);
   await thievingRecipesModule.init(ctx);
   // combat modules
+  const combatWarningItemsModule = await ctx.loadModule(
+    "src/combat/warning_items.mjs"
+  );
   const combatItemsModule = await ctx.loadModule("src/combat/items.mjs");
   const combatRecipesModule = await ctx.loadModule("src/combat/recipes.mjs");
   const combatAreasModule = await ctx.loadModule("src/combat/areas.mjs");
-  console.log("Setup complete!");
   const combatModifiersModule = await ctx.loadModule(
     "src/combat/modifiers.mjs"
   );
   const combatPassivesModule = await ctx.loadModule("src/combat/passives.mjs");
   const combatMonstersModule = await ctx.loadModule("src/combat/monsters.mjs");
+  combatWarningItemsModule.init(ctx);
   await combatModifiersModule.init(ctx);
   await combatItemsModule.init(ctx);
   await combatRecipesModule.init(ctx);
   await combatPassivesModule.init(ctx);
+  // shop modules
+  const shopPurchasesModule = await ctx.loadModule("src/shop/purchases.mjs");
+  const shopOrderingModule = await ctx.loadModule("src/shop/ordering.mjs");
+  await shopPurchasesModule.init(ctx);
+  await shopOrderingModule.init(ctx);
+
+  console.log("setup complete", game);
 
   ctx.onModsLoaded(async () => {
     await thievingNPCsModule.init(ctx);
     await combatMonstersModule.init(ctx);
-    thievingAreasModule.init(ctx);
-    combatAreasModule.init(ctx);
+    await thievingAreasModule.init(ctx);
+    await combatAreasModule.init(ctx);
   });
 
   ctx.onCharacterSelectionLoaded(async () => {});

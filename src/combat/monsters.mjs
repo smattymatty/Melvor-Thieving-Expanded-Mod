@@ -1,7 +1,17 @@
+export const cutpurseSpeed = 2500;
+export const cutPurseStabAttack = 18;
+export const syndicateLookoutSpeed = 2600;
+export const syndicateLookoutStabAttack = 30;
+export const shroudedFigureSpeed = 2500;
+export const shroudedFigureMagicAttack = 50;
+
 export async function init(ctx) {
   addCutpurse(ctx);
   addSyndicateLookout(ctx);
   addShroudedFigure(ctx);
+  addGolbinThief(ctx);
+  addBanditThief(ctx);
+  addGiantThief(ctx);
 }
 
 function addCutpurse(ctx) {
@@ -12,10 +22,10 @@ function addCutpurse(ctx) {
       media: "assets/media/monsters/cutpurse.png",
       levels: {
         Hitpoints: 30,
-        Attack: 35,
+        Attack: 33,
         Strength: 22,
-        Defence: 35,
-        Ranged: 35,
+        Defence: 33,
+        Ranged: 33,
         Magic: 10,
       },
       equipmentStats: [
@@ -39,31 +49,31 @@ function addCutpurse(ctx) {
       ignoreCompletion: false,
       attackType: "melee",
       specialAttacks: [],
-      passives: ["secondMod:StreetSmarts"],
+      passives: ["smattyThieving:StreetSmarts"],
       lootChance: 75,
       lootTable: [
         {
-          itemID: "melvorD:Leather_Chaps",
+          itemID: "smattyThieving:Thiefs_Rations",
           minQuantity: 1,
-          maxQuantity: 1,
+          maxQuantity: 3,
           weight: 40,
         },
         {
-          itemID: "melvorF:Leather_Body",
+          itemID: "smattyThieving:Improved_Thiefs_Rations",
           minQuantity: 1,
-          maxQuantity: 1,
-          weight: 35,
+          maxQuantity: 3,
+          weight: 32,
         },
         {
-          itemID: "melvorD:Black_Dagger",
+          itemID: "melvorD:Mithril_Dagger",
           minQuantity: 1,
           maxQuantity: 1,
-          weight: 30,
+          weight: 28,
         },
         {
-          itemID: "secondMod:ShoddyDice",
+          itemID: "smattyThieving:ShoddyDice",
           minQuantity: 1,
-          maxQuantity: 1,
+          maxQuantity: 2,
           weight: 25,
         },
         {
@@ -81,7 +91,7 @@ function addCutpurse(ctx) {
         {
           itemID: "melvorF:Thiefs_Moneysack",
           minQuantity: 1,
-          maxQuantity: 1,
+          maxQuantity: 5,
           weight: 10,
         },
         {
@@ -91,7 +101,7 @@ function addCutpurse(ctx) {
           weight: 3,
         },
         {
-          itemID: "secondMod:Cut_Purse",
+          itemID: "smattyThieving:Cut_Purse",
           minQuantity: 1,
           maxQuantity: 1,
           weight: 1,
@@ -122,10 +132,10 @@ function addSyndicateLookout(ctx) {
       levels: {
         Hitpoints: 50,
         Attack: 50,
-        Strength: 50,
-        Defence: 50,
-        Ranged: 50,
-        Magic: 50,
+        Strength: 44,
+        Defence: 44,
+        Ranged: 44,
+        Magic: 44,
       },
       equipmentStats: [
         {
@@ -148,47 +158,53 @@ function addSyndicateLookout(ctx) {
       ignoreCompletion: false,
       attackType: "melee",
       specialAttacks: [],
-      passives: ["secondMod:StreetSmarts"],
+      passives: ["smattyThieving:StreetSmarts"],
       lootChance: 70,
       lootTable: [
         {
-          itemID: "melvorF:Hard_Leather_Chaps",
+          itemID: "melvorD:Adamant_Gloves",
           minQuantity: 1,
           maxQuantity: 1,
-          weight: 40,
+          weight: 7,
         },
         {
-          itemID: "melvorF:Hard_Leather_Body",
+          itemID: "melvorD:Adamant_Boots",
           minQuantity: 1,
           maxQuantity: 1,
-          weight: 40,
+          weight: 7,
+        },
+        {
+          itemID: "smattyThieving:Lockpick",
+          minQuantity: 1,
+          maxQuantity: 1,
+          weight: 5,
         },
         {
           itemID: "melvorF:Mithril_Javelin",
           minQuantity: 1,
           maxQuantity: 5,
-          weight: 20,
+          weight: 28,
         },
         {
-          itemID: "secondMod:Syndicate_Insignia",
+          itemID: "smattyThieving:Syndicate_Insignia",
           minQuantity: 1,
           maxQuantity: 1,
           weight: 38,
         },
         {
-          itemID: "secondMod:ShoddyDice",
+          itemID: "smattyThieving:ShoddyDice",
           minQuantity: 1,
           maxQuantity: 1,
           weight: 18,
         },
         {
-          itemID: "secondMod:PolishedDice",
+          itemID: "smattyThieving:PolishedDice",
           minQuantity: 1,
           maxQuantity: 1,
           weight: 4,
         },
         {
-          itemID: "secondMod:Syndicate_Torch",
+          itemID: "smattyThieving:Syndicate_Torch",
           minQuantity: 1,
           maxQuantity: 1,
           weight: 3,
@@ -217,12 +233,12 @@ function addShroudedFigure(ctx) {
       name: "Shrouded Figure",
       media: "assets/media/monsters/shrouded_figure.png",
       levels: {
-        Hitpoints: 80,
-        Attack: 80,
-        Strength: 80,
-        Defence: 80,
-        Ranged: 80,
-        Magic: 80,
+        Hitpoints: 77,
+        Attack: 77,
+        Strength: 77,
+        Defence: 77,
+        Ranged: 77,
+        Magic: 77,
       },
       equipmentStats: [
         {
@@ -249,7 +265,7 @@ function addShroudedFigure(ctx) {
       ignoreCompletion: false,
       attackType: "magic",
       specialAttacks: [],
-      passives: ["secondMod:StreetSmarts"],
+      passives: ["smattyThieving:StreetsAhead"],
       lootChance: 25,
       lootTable: [
         {
@@ -265,13 +281,19 @@ function addShroudedFigure(ctx) {
           weight: 10,
         },
         {
-          itemID: "secondMod:Shrouded_Cape",
+          itemID: "smattyThieving:Shrouded_Cape",
           minQuantity: 1,
           maxQuantity: 1,
           weight: 1,
         },
         {
-          itemID: "secondMod:Map_To_Shroud_Lands",
+          itemID: "smattyThieving:Shrouded_Hood",
+          minQuantity: 1,
+          maxQuantity: 1,
+          weight: 1,
+        },
+        {
+          itemID: "smattyThieving:Map_To_Shroud_Lands",
           minQuantity: 1,
           maxQuantity: 1,
           weight: 2,
@@ -285,10 +307,211 @@ function addShroudedFigure(ctx) {
       isBoss: false,
       selectedSpell: "melvorD:FireBolt",
       bones: {
-        itemID: "secondMod:Shrouded_Bones",
+        itemID: "smattyThieving:Shrouded_Bones",
         quantity: 1,
       },
     });
   });
   shroudedFigure.add();
+}
+
+function addGolbinThief(ctx) {
+  const golbinThief = ctx.gameData.buildPackage((p) => {
+    p.monsters.add({
+      id: "GolbinThief",
+      name: "Golbin Thief",
+      media: "assets/media/monsters/golbin_thief.png",
+      levels: {
+        Hitpoints: 7,
+        Attack: 8,
+        Strength: 6,
+        Defence: 8,
+        Ranged: 8,
+        Magic: 1,
+      },
+      equipmentStats: [
+        {
+          key: "attackSpeed",
+          value: 2600,
+        },
+      ],
+      ignoreCompletion: false,
+      attackType: "melee",
+      specialAttacks: [],
+      passives: ["smattyThieving:ThiefsInstinctI"],
+      lootChance: 100,
+      lootTable: [
+        {
+          itemID: "smattyThieving:Thiefs_Rations",
+          minQuantity: 1,
+          maxQuantity: 3,
+          weight: 40,
+        },
+        {
+          itemID: "melvorD:Shrimp",
+          minQuantity: 1,
+          maxQuantity: 2,
+          weight: 35,
+        },
+        {
+          itemID: "melvorF:Hard_Leather_Vambraces",
+          minQuantity: 1,
+          maxQuantity: 1,
+          weight: 5,
+        },
+        {
+          itemID: "melvorF:Hard_Leather_Boots",
+          minQuantity: 1,
+          maxQuantity: 1,
+          weight: 5,
+        },
+      ],
+      gpDrops: {
+        min: 10,
+        max: 55,
+      },
+      canSlayer: true,
+      isBoss: false,
+      selectedSpell: "melvorD:WindStrike",
+      bones: {
+        itemID: "melvorD:Bones",
+        quantity: 1,
+      },
+    });
+  });
+  golbinThief.add();
+}
+
+function addBanditThief(ctx) {
+  const banditThief = ctx.gameData.buildPackage((p) => {
+    p.monsters.add({
+      id: "BanditThief",
+      name: "Bandit Thief",
+      media: "assets/media/monsters/bandit_thief.png",
+      levels: {
+        Hitpoints: 28,
+        Attack: 30,
+        Strength: 20,
+        Defence: 23,
+        Ranged: 20,
+        Magic: 5,
+      },
+      equipmentStats: [
+        {
+          key: "attackSpeed",
+          value: 2600,
+        },
+      ],
+      ignoreCompletion: false,
+      attackType: "melee",
+      specialAttacks: [],
+      passives: ["smattyThieving:ThiefsInstinctII"],
+      lootChance: 100,
+      lootTable: [
+        {
+          itemID: "smattyThieving:Thiefs_Rations",
+          minQuantity: 1,
+          maxQuantity: 3,
+          weight: 40,
+        },
+        {
+          itemID: "melvorD:Herring",
+          minQuantity: 1,
+          maxQuantity: 2,
+          weight: 35,
+        },
+        {
+          itemID: "melvorD:Steel_Gloves",
+          minQuantity: 1,
+          maxQuantity: 1,
+          weight: 5,
+        },
+        {
+          itemID: "melvorD:Steel_Boots",
+          minQuantity: 1,
+          maxQuantity: 1,
+          weight: 5,
+        },
+      ],
+      gpDrops: {
+        min: 15,
+        max: 70,
+      },
+      canSlayer: true,
+      isBoss: false,
+      selectedSpell: "melvorD:WindStrike",
+      bones: {
+        itemID: "melvorD:Bones",
+        quantity: 1,
+      },
+    });
+  });
+  banditThief.add();
+}
+
+function addGiantThief(ctx) {
+  const giantThief = ctx.gameData.buildPackage((p) => {
+    p.monsters.add({
+      id: "GiantThief",
+      name: "Giant Thief",
+      media: "assets/media/monsters/giant_thief.png",
+      levels: {
+        Hitpoints: 48,
+        Attack: 40,
+        Strength: 28,
+        Defence: 28,
+        Ranged: 30,
+        Magic: 10,
+      },
+      equipmentStats: [
+        {
+          key: "attackSpeed",
+          value: 2800,
+        },
+      ],
+      ignoreCompletion: false,
+      attackType: "melee",
+      specialAttacks: [],
+      passives: ["smattyThieving:ThiefsInstinctIII"],
+      lootChance: 100,
+      lootTable: [
+        {
+          itemID: "smattyThieving:Improved_Thiefs_Rations",
+          minQuantity: 1,
+          maxQuantity: 3,
+          weight: 40,
+        },
+        {
+          itemID: "melvorF:Apple",
+          minQuantity: 1,
+          maxQuantity: 2,
+          weight: 35,
+        },
+        {
+          itemID: "melvorD:Mithril_Gloves",
+          minQuantity: 1,
+          maxQuantity: 1,
+          weight: 5,
+        },
+        {
+          itemID: "melvorD:Mithril_Boots",
+          minQuantity: 1,
+          maxQuantity: 1,
+          weight: 5,
+        },
+      ],
+      gpDrops: {
+        min: 20,
+        max: 90,
+      },
+      canSlayer: true,
+      isBoss: false,
+      selectedSpell: "melvorD:WindStrike",
+      bones: {
+        itemID: "melvorD:Big_Bones",
+        quantity: 1,
+      },
+    });
+  });
+  giantThief.add();
 }

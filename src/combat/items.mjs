@@ -5,6 +5,7 @@ export async function init(ctx) {
   addShroudedBones(ctx);
   addMapToShroudLands(ctx);
   addShroudedCape(ctx);
+  addShroudedHood(ctx);
 }
 
 function addCutPurse(ctx) {
@@ -31,7 +32,7 @@ function addCutPurse(ctx) {
       name: "Stitched Purse",
       media: "assets/media/items/combat/stitchedpurse.svg",
       customDescription:
-        "+20 Thieving Stealth.<br>Gain 1 extra GP per point of Thieving Stealth upon successful Thieving. <br><span class='text-warning'>Can be upgraded into Bobby's Purse",
+        "+20 Thieving Stealth.<br>On Successful Thieving Action: Gain 1 GP per Stealth against target NPC. <br><span class='text-warning'>Can be upgraded into Bobby's Purse",
       ignoreCompletion: false,
       obtainFromItemLog: false,
       golbinRaidExclusive: false,
@@ -52,15 +53,15 @@ function addCutPurse(ctx) {
       equipmentStats: [
         {
           key: "meleeDefenceBonus",
-          value: 12,
+          value: 10,
         },
         {
           key: "rangedDefenceBonus",
-          value: 12,
+          value: 10,
         },
         {
           key: "magicDefenceBonus",
-          value: 12,
+          value: 10,
         },
         {
           key: "damageReduction",
@@ -78,11 +79,11 @@ function addCutPurse(ctx) {
       name: "Bobby's Purse",
       media: "assets/media/items/combat/bobbyspurse.svg",
       customDescription:
-        "+30 Thieving Stealth.<br>Gain 2 extra GP per point of Thieving Stealth upon successful Thieving.",
+        "+30 Thieving Stealth.<br>>On Successful Thieving Action: Gain 2 GP per Stealth against target NPC.",
       ignoreCompletion: false,
       obtainFromItemLog: false,
       golbinRaidExclusive: false,
-      sellsFor: 2500,
+      sellsFor: 150000,
       validSlots: ["Shield"],
       occupiesSlots: [],
       equipRequirements: [
@@ -99,15 +100,15 @@ function addCutPurse(ctx) {
       equipmentStats: [
         {
           key: "meleeDefenceBonus",
-          value: 30,
+          value: 15,
         },
         {
           key: "rangedDefenceBonus",
-          value: 30,
+          value: 15,
         },
         {
           key: "magicDefenceBonus",
-          value: 30,
+          value: 15,
         },
         {
           key: "damageReduction",
@@ -126,7 +127,7 @@ function addShroudedBones(ctx) {
     p.items.add({
       type: "Bone",
       itemType: "Bone",
-      prayerPoints: 4,
+      prayerPoints: 3,
       category: "Misc",
       id: "Shrouded_Bones",
       name: "Shrouded Bones",
@@ -135,7 +136,7 @@ function addShroudedBones(ctx) {
       ignoreCompletion: false,
       obtainFromItemLog: false,
       golbinRaidExclusive: false,
-      sellsFor: 222,
+      sellsFor: 200,
     });
   });
   shroudedBones.add();
@@ -187,7 +188,7 @@ function addSyndicateInsignia(ctx) {
       category: "Combat",
       id: "Syndicate_Insignia",
       name: "Syndicate Insignia",
-      media: "assets/media/items/combat/syndicate_insignia.svg",
+      media: "assets/media/items/combat/syndicate_insignia.png",
       customDescription: "An insignia of the Syndicate.",
       ignoreCompletion: false,
       obtainFromItemLog: false,
@@ -207,7 +208,7 @@ function addShroudedCape(ctx) {
       id: "Shrouded_Cape",
       name: "Shrouded Cape",
       media: "assets/media/items/combat/shrouded_cape.png",
-      customDescription: "A cape covered in shrouded energy.",
+      customDescription: "+10 Thieving Stealth",
       ignoreCompletion: false,
       obtainFromItemLog: false,
       golbinRaidExclusive: false,
@@ -252,11 +253,12 @@ function addShroudedCape(ctx) {
       id: "Shrouded_Thievers_Cape",
       name: "Shrouded Thiever's Cape",
       media: "assets/media/items/combat/shrouded_thievers_cape.png",
-      customDescription: "A Thiever's cape covered in shrouded energy.",
+      customDescription:
+        "+35 Thieving Stealth<br>+15% increased GP from Thieving<br>+2% Skill XP from Thieving",
       ignoreCompletion: false,
       obtainFromItemLog: false,
       golbinRaidExclusive: false,
-      sellsFor: 5000,
+      sellsFor: 10000,
       validSlots: ["Cape"],
       equipRequirements: [
         {
@@ -298,4 +300,107 @@ function addShroudedCape(ctx) {
   });
   shroudedCape.add();
   shroudedThieversCape.add();
+}
+
+function addShroudedHood(ctx) {
+  const shroudedHood = ctx.gameData.buildPackage((p) => {
+    p.items.add({
+      type: "Equipment",
+      itemType: "Equipment",
+      category: "Combat",
+      id: "Shrouded_Hood",
+      name: "Shrouded Hood",
+      media: "assets/media/items/combat/shrouded_hood.png",
+      customDescription: "A hood covered in shrouded energy.",
+      ignoreCompletion: false,
+      obtainFromItemLog: false,
+      golbinRaidExclusive: false,
+      sellsFor: 5000,
+      validSlots: ["Helmet"],
+      equipRequirements: [
+        {
+          type: "SkillLevel",
+          skillID: "melvorD:Thieving",
+          level: 20,
+        },
+      ],
+      occupiesSlots: [],
+      equipmentStats: [
+        {
+          key: "meleeDefenceBonus",
+          value: 8,
+        },
+        {
+          key: "rangedDefenceBonus",
+          value: 8,
+        },
+        {
+          key: "magicDefenceBonus",
+          value: 8,
+        },
+        {
+          key: "damageReduction",
+          value: 1,
+        },
+      ],
+      modifiers: {
+        increasedThievingStealth: 10,
+      },
+    });
+  });
+  const shroudedGoblinHood = ctx.gameData.buildPackage((p) => {
+    p.items.add({
+      type: "Equipment",
+      itemType: "Equipment",
+      category: "Combat",
+      id: "Shrouded_Golbin_Hood",
+      name: "Shrouded Golbin Hood",
+      media: "assets/media/items/combat/shrouded_goblin_hood.png",
+      customDescription:
+        "+30 Thieving Stealth<br>+30 flat GP from Thieving<br>+2% Mastery XP from Thieving",
+      ignoreCompletion: false,
+      obtainFromItemLog: false,
+      golbinRaidExclusive: false,
+      sellsFor: 10000,
+      validSlots: ["Helmet"],
+      equipRequirements: [
+        {
+          type: "SkillLevel",
+          skillID: "melvorD:Thieving",
+          level: 20,
+        },
+      ],
+      occupiesSlots: [],
+      equipmentStats: [
+        {
+          key: "meleeDefenceBonus",
+          value: 10,
+        },
+        {
+          key: "rangedDefenceBonus",
+          value: 10,
+        },
+        {
+          key: "magicDefenceBonus",
+          value: 10,
+        },
+        {
+          key: "damageReduction",
+          value: 2,
+        },
+      ],
+      modifiers: {
+        increasedThievingStealth: 30,
+        increasedGPFromThievingFlat: 30,
+        increasedMasteryXP: [
+          {
+            skillID: "melvorD:Thieving",
+            value: 2,
+          },
+        ],
+      },
+    });
+  });
+  shroudedHood.add();
+  shroudedGoblinHood.add();
 }

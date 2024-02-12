@@ -10,7 +10,7 @@ const bag_of_dice_price =
     polished_dice_price +
     shiny_dice_price +
     master_dice_price) *
-  4.4;
+  2;
 
 const dicey_price = gold_bar_price * 5 + polished_dice_price * 5.1;
 const elite_dicey_price = dicey_price * 5.2;
@@ -31,6 +31,10 @@ export function init(ctx) {
   addDiceyRingCharged(ctx);
   addDiceyNecklaceCharged(ctx);
   addSyndicateLetter(ctx);
+  addLockpick(ctx);
+  addThiefsRations(ctx);
+  addDealersWand(ctx);
+  addThrowingCard(ctx);
 }
 
 function addDice(ctx) {
@@ -40,7 +44,7 @@ function addDice(ctx) {
       id: "ShoddyDice",
       name: "Shoddy Dice",
       customDescription:
-        '6% chance on attack: Enemy takes 10% of your thieving stealth as damage. <br><span class="text-warning">Can be crafted into polished dice',
+        '12% chance on attack: Enemy takes 10% of your thieving stealth as damage. <br><span class="text-warning">Can be crafted into polished dice',
       category: "Combat",
       type: "Equipment",
       media: "assets/media/items/thieving/shoddy_dice.svg",
@@ -53,7 +57,7 @@ function addDice(ctx) {
       occupiesSlots: [],
       equipRequirements: [],
       equipmentStats: [],
-      modifiers: { chanceForFlatStealthDamage: 6 },
+      modifiers: { chanceForFlatStealthDamage: 12 },
       consumesOn: [
         {
           type: "PlayerAttack",
@@ -68,7 +72,7 @@ function addDice(ctx) {
       id: "PolishedDice",
       name: "Polished Dice",
       customDescription:
-        '12% chance on attack: Enemy takes 10% of your thieving stealth as damage. <br><span class="text-warning">Can be crafted into shiny dice',
+        '20% chance on attack: Enemy takes 10% of your thieving stealth as damage. <br><span class="text-warning">Can be crafted into shiny dice',
       category: "Combat",
       type: "Equipment",
       media: "assets/media/items/thieving/dice.svg",
@@ -76,33 +80,6 @@ function addDice(ctx) {
       obtainFromItemLog: false,
       goblinRaidExclusive: false,
       sellsFor: polished_dice_price,
-      tier: "none",
-      validSlots: ["Consumable"],
-      occupiesSlots: [],
-      equipRequirements: [],
-      equipmentStats: [],
-      modifiers: { chanceForFlatStealthDamage: 12 },
-      consumesOn: [
-        {
-          type: "PlayerAttack",
-        },
-      ],
-    });
-  });
-  const shinyDice = ctx.gameData.buildPackage((p) => {
-    p.items.add({
-      itemType: "Equipment",
-      id: "ShinyDice",
-      name: "Shiny Dice",
-      customDescription:
-        '20% chance on attack: Enemy takes 10% of your thieving stealth as damage. <br><span class="text-warning">Can be crafted into master dice',
-      category: "Combat",
-      type: "Equipment",
-      media: "assets/media/items/thieving/shiny_dice.svg",
-      ignoreCompletion: false,
-      obtainFromItemLog: false,
-      goblinRaidExclusive: false,
-      sellsFor: shiny_dice_price,
       tier: "none",
       validSlots: ["Consumable"],
       occupiesSlots: [],
@@ -116,13 +93,40 @@ function addDice(ctx) {
       ],
     });
   });
+  const shinyDice = ctx.gameData.buildPackage((p) => {
+    p.items.add({
+      itemType: "Equipment",
+      id: "ShinyDice",
+      name: "Shiny Dice",
+      customDescription:
+        '30% chance on attack: Enemy takes 10% of your thieving stealth as damage. <br><span class="text-warning">Can be crafted into master dice',
+      category: "Combat",
+      type: "Equipment",
+      media: "assets/media/items/thieving/shiny_dice.svg",
+      ignoreCompletion: false,
+      obtainFromItemLog: false,
+      goblinRaidExclusive: false,
+      sellsFor: shiny_dice_price,
+      tier: "none",
+      validSlots: ["Consumable"],
+      occupiesSlots: [],
+      equipRequirements: [],
+      equipmentStats: [],
+      modifiers: { chanceForFlatStealthDamage: 30 },
+      consumesOn: [
+        {
+          type: "PlayerAttack",
+        },
+      ],
+    });
+  });
   const masterDice = ctx.gameData.buildPackage((p) => {
     p.items.add({
       itemType: "Equipment",
       id: "MasterDice",
       name: "Master Dice",
       customDescription:
-        "30% chance on attack: Enemy takes 10% of your thieving stealth as damage.",
+        "42% chance on attack: Enemy takes 10% of your thieving stealth as damage.",
       category: "Combat",
       type: "Equipment",
       media: "assets/media/items/thieving/master_dice.svg",
@@ -135,7 +139,7 @@ function addDice(ctx) {
       occupiesSlots: [],
       equipRequirements: [],
       equipmentStats: [],
-      modifiers: { chanceForFlatStealthDamage: 30 },
+      modifiers: { chanceForFlatStealthDamage: 42 },
       consumesOn: [
         {
           type: "PlayerAttack",
@@ -164,22 +168,28 @@ function addBagOfDice(ctx) {
       sellsFor: bag_of_dice_price,
       dropTable: [
         {
-          itemID: "secondMod:ShoddyDice",
-          minQuantity: 1,
-          maxQuantity: 100,
-          weight: 10,
-        },
-        {
-          itemID: "secondMod:PolishedDice",
+          itemID: "smattyThieving:ShoddyDice",
           minQuantity: 1,
           maxQuantity: 75,
-          weight: 8,
+          weight: 40,
         },
         {
-          itemID: "secondMod:ShinyDice",
+          itemID: "smattyThieving:PolishedDice",
           minQuantity: 1,
           maxQuantity: 50,
+          weight: 16,
+        },
+        {
+          itemID: "smattyThieving:ShinyDice",
+          minQuantity: 1,
+          maxQuantity: 25,
           weight: 6,
+        },
+        {
+          itemID: "smattyThieving:MasterDice",
+          minQuantity: 1,
+          maxQuantity: 10,
+          weight: 3,
         },
       ],
     });
@@ -196,52 +206,114 @@ function addGamblersKnife(ctx) {
       name: "Gamblers Knife",
       category: "Combat",
       type: "Equipment",
-      media: "assets/media/items/thieving/gamblers_knife.svg",
+      media: "assets/media/items/combat/gamblers_knife.png",
+      customDescription: "+10 Thieving Stealth",
       ignoreCompletion: false,
       obtainFromItemLog: false,
       goblinRaidExclusive: false,
-      sellsFor: 200,
+      sellsFor: 10000,
       tier: "none",
       validSlots: ["Weapon"],
       occupiesSlots: [],
+      modifiers: {
+        increasedThievingStealth: 10,
+      },
       equipRequirements: [
         {
           type: "SkillLevel",
           skillID: "melvorD:Attack",
-          level: 5,
+          level: 20,
         },
         {
           type: "SkillLevel",
           skillID: "melvorD:Thieving",
-          level: 10,
+          level: 20,
         },
       ],
       equipmentStats: [
         {
           key: "attackSpeed",
-          value: 2200,
+          value: 2100,
         },
         {
           key: "stabAttackBonus",
-          value: 10,
+          value: 18,
         },
         {
           key: "slashAttackBonus",
-          value: 4,
+          value: 5,
         },
         {
           key: "blockAttackBonus",
-          value: 10,
+          value: 18,
         },
         {
           key: "meleeStrengthBonus",
-          value: 6,
+          value: 10,
         },
       ],
-      specialAttacks: ["secondMod:GamblersStrike"],
+      specialAttacks: ["smattyThieving:GamblersStrike"],
+    });
+  });
+  const eliteGamblersKnife = ctx.gameData.buildPackage((p) => {
+    p.items.add({
+      itemType: "Weapon",
+      attackType: "melee",
+      id: "EliteGamblersKnife",
+      name: "Elite Gamblers Knife",
+      category: "Combat",
+      type: "Equipment",
+      media: "assets/media/items/combat/gamblers_knife_elite.png",
+      customDescription: "+20 Thieving Stealth",
+      ignoreCompletion: false,
+      obtainFromItemLog: false,
+      goblinRaidExclusive: false,
+      sellsFor: 20000,
+      tier: "none",
+      validSlots: ["Weapon"],
+      occupiesSlots: [],
+      modifiers: {
+        increasedThievingStealth: 20,
+      },
+      equipRequirements: [
+        {
+          type: "SkillLevel",
+          skillID: "melvorD:Attack",
+          level: 40,
+        },
+        {
+          type: "SkillLevel",
+          skillID: "melvorD:Thieving",
+          level: 40,
+        },
+      ],
+      equipmentStats: [
+        {
+          key: "attackSpeed",
+          value: 2100,
+        },
+        {
+          key: "stabAttackBonus",
+          value: 35,
+        },
+        {
+          key: "slashAttackBonus",
+          value: 12,
+        },
+        {
+          key: "blockAttackBonus",
+          value: 35,
+        },
+        {
+          key: "meleeStrengthBonus",
+          value: 24,
+        },
+      ],
+      specialAttacks: ["smattyThieving:EliteGamblersStrike"],
     });
   });
   gamblersKnife.add();
+  eliteGamblersKnife.add();
 }
 
 function addDiceyRing(ctx) {
@@ -254,7 +326,7 @@ function addDiceyRing(ctx) {
       type: "Equipment",
       media: "assets/media/items/thieving/dicey_ring.svg",
       customDescription:
-        '+5 Thieving Stealth when equipped. <br><span class="text-warning">Can be charged with Dice via upgrade',
+        '+10 Thieving Stealth. <br><span class="text-warning">Can be charged with Dice via upgrade',
       ignoreCompletion: false,
       obtainFromItemLog: false,
       goblinRaidExclusive: false,
@@ -271,7 +343,7 @@ function addDiceyRing(ctx) {
       ],
       equipmentStats: [],
       modifiers: {
-        increasedThievingStealth: 5,
+        increasedThievingStealth: 10,
       },
     });
   });
@@ -288,7 +360,7 @@ function addDiceyNecklace(ctx) {
       type: "Equipment",
       media: "assets/media/items/thieving/dicey_necklace.svg",
       customDescription:
-        '+5 Thieving Stealth when equipped. <br><span class="text-warning">Can be charged with Dice via upgrade',
+        '+10 Thieving Stealth when equipped. <br><span class="text-warning">Can be charged with Dice via upgrade',
       ignoreCompletion: false,
       obtainFromItemLog: false,
       goblinRaidExclusive: false,
@@ -305,7 +377,7 @@ function addDiceyNecklace(ctx) {
       ],
       equipmentStats: [],
       modifiers: {
-        increasedThievingStealth: 5,
+        increasedThievingStealth: 10,
       },
     });
   });
@@ -322,7 +394,7 @@ function addEliteDiceyRing(ctx) {
       type: "Equipment",
       media: "assets/media/items/thieving/elite_dicey_ring.svg",
       customDescription:
-        '+10 Thieving Stealth when equipped. <br><span class="text-warning">Can be charged with Dice via upgrade',
+        '+15 Thieving Stealth when equipped. <br><span class="text-warning">Can be charged with Dice via upgrade',
       ignoreCompletion: false,
       obtainFromItemLog: false,
       goblinRaidExclusive: false,
@@ -339,7 +411,7 @@ function addEliteDiceyRing(ctx) {
       ],
       equipmentStats: [],
       modifiers: {
-        increasedThievingStealth: 10,
+        increasedThievingStealth: 15,
       },
     });
   });
@@ -356,7 +428,7 @@ function addEliteDiceyNecklace(ctx) {
       type: "Equipment",
       media: "assets/media/items/thieving/elite_dicey_necklace.svg",
       customDescription:
-        '+10 Thieving Stealth when equipped. <br><span class="text-warning">Can be charged with Dice via upgrade',
+        '+15 Thieving Stealth when equipped. <br><span class="text-warning">Can be charged with Dice via upgrade',
       ignoreCompletion: false,
       obtainFromItemLog: false,
       goblinRaidExclusive: false,
@@ -373,7 +445,7 @@ function addEliteDiceyNecklace(ctx) {
       ],
       equipmentStats: [],
       modifiers: {
-        increasedThievingStealth: 10,
+        increasedThievingStealth: 15,
       },
     });
   });
@@ -390,7 +462,7 @@ function addUltraDiceyRing(ctx) {
       type: "Equipment",
       media: "assets/media/items/thieving/ultra_dicey_ring.svg",
       customDescription:
-        '+15 Thieving Stealth when equipped. <br><span class="text-warning">Can be charged with Dice via upgrade',
+        '+20 Thieving Stealth when equipped. <br><span class="text-warning">Can be charged with Dice via upgrade',
       ignoreCompletion: false,
       obtainFromItemLog: false,
       goblinRaidExclusive: false,
@@ -407,7 +479,7 @@ function addUltraDiceyRing(ctx) {
       ],
       equipmentStats: [],
       modifiers: {
-        increasedThievingStealth: 15,
+        increasedThievingStealth: 20,
       },
     });
   });
@@ -424,7 +496,7 @@ function addUltraDiceyNecklace(ctx) {
       type: "Equipment",
       media: "assets/media/items/thieving/ultra_dicey_necklace.svg",
       customDescription:
-        '+15 Thieving Stealth when equipped. <br><span class="text-warning">Can be charged with Dice via upgrade',
+        '+20 Thieving Stealth when equipped. <br><span class="text-warning">Can be charged with Dice via upgrade',
       ignoreCompletion: false,
       obtainFromItemLog: false,
       goblinRaidExclusive: false,
@@ -441,7 +513,7 @@ function addUltraDiceyNecklace(ctx) {
       ],
       equipmentStats: [],
       modifiers: {
-        increasedThievingStealth: 15,
+        increasedThievingStealth: 20,
       },
     });
   });
@@ -458,7 +530,7 @@ function addDiceyRingCharged(ctx) {
       type: "Equipment",
       media: "assets/media/items/thieving/dicey_ring.svg",
       customDescription:
-        "+10 Thieving Stealth when equipped. <br>1-60% extra gold gained on thieving acion.",
+        "+15 Thieving Stealth when equipped. <br>1-50% extra gold gained on thieving acion.",
       ignoreCompletion: false,
       obtainFromItemLog: false,
       goblinRaidExclusive: false,
@@ -475,7 +547,7 @@ function addDiceyRingCharged(ctx) {
       ],
       equipmentStats: [],
       modifiers: {
-        increasedThievingStealth: 10,
+        increasedThievingStealth: 15,
       },
     });
   });
@@ -492,7 +564,7 @@ function addDiceyNecklaceCharged(ctx) {
       type: "Equipment",
       media: "assets/media/items/thieving/dicey_necklace.svg",
       customDescription:
-        "+10 Thieving Stealth when equipped. <br>20% chance to dodge damage/stun on thieving failure.",
+        "+15 Thieving Stealth when equipped. <br>10% chance to avoid being damaged or stunned on Thieving Failure.",
       ignoreCompletion: false,
       obtainFromItemLog: false,
       goblinRaidExclusive: false,
@@ -509,11 +581,27 @@ function addDiceyNecklaceCharged(ctx) {
       ],
       equipmentStats: [],
       modifiers: {
-        increasedThievingStealth: 10,
+        increasedThievingStealth: 15,
       },
     });
   });
   diceyNecklaceCharged.add();
+}
+
+function addLockpick(ctx) {
+  const lockpick = ctx.gameData.buildPackage((p) => {
+    p.items.add({
+      itemType: "Item",
+      id: "Lockpick",
+      name: "Lockpick",
+      sellsFor: 25,
+      category: "Thieving",
+      type: "Misc",
+      media: "assets/media/items/thieving/lockpick.svg",
+      customDescription: "Used to break into locked chests.",
+    });
+  });
+  lockpick.add();
 }
 
 function addSyndicateLetter(ctx) {
@@ -523,11 +611,289 @@ function addSyndicateLetter(ctx) {
       id: "SyndicateLetter",
       name: "Syndicate Letter",
       category: "Thieving",
+      sellsFor: 6666,
       type: "Misc",
       media: "assets/media/items/thieving/syndicate_letter.svg",
       customDescription:
-        "Detailed Plans on how the Syndicate works.<br>Used in Shop Purchase",
+        "Detailed Plans about the inner workings of the 'Syndicate', a powerful crime ring that runs Low Town through the shadows.<br>Used in Shop Purchase",
     });
   });
   syndicateLetter.add();
+}
+
+function addThiefsRations(ctx) {
+  const thiefsRations = ctx.gameData.buildPackage((p) => {
+    p.items.add({
+      itemType: "Equipment",
+      id: "Thiefs_Rations",
+      name: "Thief's Rations",
+      customDescription:
+        "On Thieving Failure: Heal for 11% of your Maximum Health.",
+      category: "Combat",
+      type: "Equipment",
+      media: "assets/media/items/thieving/thiefs_rations.png",
+      ignoreCompletion: false,
+      obtainFromItemLog: false,
+      goblinRaidExclusive: false,
+      sellsFor: 10,
+      tier: "none",
+      validSlots: ["Consumable"],
+      occupiesSlots: [],
+      equipRequirements: [],
+      equipmentStats: [],
+      modifiers: { thiefsRations: 11 },
+      consumesOn: [
+        {
+          type: "ThievingAction",
+          succesful: false,
+        },
+      ],
+    });
+  });
+  const improvedThiefsRations = ctx.gameData.buildPackage((p) => {
+    p.items.add({
+      itemType: "Equipment",
+      id: "Improved_Thiefs_Rations",
+      name: "Improved Thief's Rations",
+      customDescription:
+        "On Thieving Failure: Heal for 22% of your Maximum Health.",
+      category: "Combat",
+      type: "Equipment",
+      media: "assets/media/items/thieving/improved_thiefs_rations.png",
+      ignoreCompletion: false,
+      obtainFromItemLog: false,
+      goblinRaidExclusive: false,
+      sellsFor: 30,
+      tier: "none",
+      validSlots: ["Consumable"],
+      occupiesSlots: [],
+      equipRequirements: [],
+      equipmentStats: [],
+      modifiers: { thiefsRations: 22 },
+      consumesOn: [
+        {
+          type: "ThievingAction",
+          succesful: false,
+        },
+      ],
+    });
+  });
+  thiefsRations.add();
+  improvedThiefsRations.add();
+}
+
+function addDealersWand(ctx) {
+  const dealersWand = ctx.gameData.buildPackage((p) => {
+    p.items.add({
+      itemType: "Weapon",
+      attackType: "magic",
+      id: "DealersWand",
+      name: "Dealer's Wand",
+      category: "Combat",
+      type: "Equipment",
+      media: "assets/media/items/combat/dealers_wand.png",
+      customDescription: "+10 Thieving Stealth",
+      ignoreCompletion: false,
+      obtainFromItemLog: false,
+      goblinRaidExclusive: false,
+      sellsFor: 10000,
+      tier: "wand",
+      validSlots: ["Weapon"],
+      occupiesSlots: [],
+      modifiers: {
+        increasedThievingStealth: 10,
+      },
+      equipRequirements: [
+        {
+          type: "SkillLevel",
+          skillID: "melvorD:Magic",
+          level: 20,
+        },
+        {
+          type: "SkillLevel",
+          skillID: "melvorD:Thieving",
+          level: 20,
+        },
+      ],
+      equipmentStats: [
+        {
+          key: "attackSpeed",
+          value: 2500,
+        },
+        {
+          key: "magicAttackBonus",
+          value: 18,
+        },
+        {
+          key: "magicDamageBonus",
+          value: 4,
+        },
+        {
+          key: "magicDefenceBonus",
+          value: 18,
+        },
+      ],
+      specialAttacks: ["smattyThieving:DealersFlush"],
+    });
+  });
+  const eliteDealersWand = ctx.gameData.buildPackage((p) => {
+    p.items.add({
+      itemType: "Weapon",
+      attackType: "magic",
+      id: "EliteDealersWand",
+      name: "Elite Dealers Wand",
+      category: "Combat",
+      type: "Equipment",
+      media: "assets/media/items/combat/dealers_wand_elite.png",
+      customDescription: "+20 Thieving Stealth",
+      ignoreCompletion: false,
+      obtainFromItemLog: false,
+      goblinRaidExclusive: false,
+      sellsFor: 20000,
+      tier: "wand",
+      validSlots: ["Weapon"],
+      occupiesSlots: [],
+      modifiers: {
+        increasedThievingStealth: 20,
+      },
+      equipRequirements: [
+        {
+          type: "SkillLevel",
+          skillID: "melvorD:Magic",
+          level: 40,
+        },
+        {
+          type: "SkillLevel",
+          skillID: "melvorD:Thieving",
+          level: 40,
+        },
+      ],
+      equipmentStats: [
+        {
+          key: "attackSpeed",
+          value: 2500,
+        },
+        {
+          key: "magicAttackBonus",
+          value: 23,
+        },
+        {
+          key: "magicDamageBonus",
+          value: 8,
+        },
+        {
+          key: "magicDefenceBonus",
+          value: 23,
+        },
+      ],
+      specialAttacks: ["smattyThieving:EliteDealersFlush"],
+    });
+  });
+  dealersWand.add();
+  eliteDealersWand.add();
+}
+
+function addThrowingCard(ctx) {
+  const throwingCard = ctx.gameData.buildPackage((p) => {
+    p.items.add({
+      itemType: "Weapon",
+      attackType: "ranged",
+      id: "ThrowingCard",
+      name: "Throwing Card",
+      category: "Combat",
+      type: "Equipment",
+      media: "assets/media/items/combat/throwing_cards.png",
+      customDescription: "+10 Thieving Stealth<br>+15% Ammo Preservation",
+      ignoreCompletion: false,
+      obtainFromItemLog: false,
+      goblinRaidExclusive: false,
+      sellsFor: 200,
+      tier: "none",
+      validSlots: ["Quiver"],
+      occupiesSlots: ["Weapon"],
+      modifiers: {
+        increasedThievingStealth: 10,
+        increasedAmmoPreservation: 15,
+      },
+      equipRequirements: [
+        {
+          type: "SkillLevel",
+          skillID: "melvorD:Ranged",
+          level: 20,
+        },
+        {
+          type: "SkillLevel",
+          skillID: "melvorD:Thieving",
+          level: 20,
+        },
+      ],
+      equipmentStats: [
+        {
+          key: "attackSpeed",
+          value: 1900,
+        },
+        {
+          key: "rangedAttackBonus",
+          value: 4,
+        },
+        {
+          key: "rangedStrengthBonus",
+          value: 25,
+        },
+      ],
+      specialAttacks: ["smattyThieving:TwoOfAKind"],
+    });
+  });
+  const eliteThrowingCard = ctx.gameData.buildPackage((p) => {
+    p.items.add({
+      itemType: "Weapon",
+      attackType: "ranged",
+      id: "EliteThrowingCard",
+      name: "Elite Throwing Card",
+      category: "Combat",
+      type: "Equipment",
+      media: "assets/media/items/combat/throwing_cards_elite.png",
+      customDescription: "+20 Thieving Stealth<br>+20% Ammo Preservation",
+      ignoreCompletion: false,
+      obtainFromItemLog: false,
+      goblinRaidExclusive: false,
+      sellsFor: 400,
+      tier: "none",
+      validSlots: ["Quiver"],
+      occupiesSlots: ["Weapon"],
+      modifiers: {
+        increasedThievingStealth: 20,
+        increasedAmmoPreservation: 20,
+      },
+      equipRequirements: [
+        {
+          type: "SkillLevel",
+          skillID: "melvorD:Ranged",
+          level: 40,
+        },
+        {
+          type: "SkillLevel",
+          skillID: "melvorD:Thieving",
+          level: 40,
+        },
+      ],
+      equipmentStats: [
+        {
+          key: "attackSpeed",
+          value: 1900,
+        },
+        {
+          key: "rangedAttackBonus",
+          value: 6,
+        },
+        {
+          key: "rangedStrengthBonus",
+          value: 38,
+        },
+      ],
+      specialAttacks: ["smattyThieving:ThreeOfAKind"],
+    });
+  });
+  throwingCard.add();
+  eliteThrowingCard.add();
 }
