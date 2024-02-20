@@ -6,5 +6,4 @@ export function healPlayer(amount) {
       player.hitpoints = player.stats.maxHitpoints;
     }
   }
-  console.log("player should be healed ", Math.floor(amount));
 }

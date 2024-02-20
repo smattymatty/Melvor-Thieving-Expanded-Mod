@@ -17,6 +17,7 @@ const elite_dicey_price = dicey_price * 5.2;
 const ultra_dicey_price = elite_dicey_price * 5.3;
 
 const dicey_price_charged = dicey_price + 10000 + polished_dice_price * 100;
+const elite_dicey_price_charged = elite_dicey_price + shiny_dice_price * 100;
 
 export function init(ctx) {
   addDice(ctx);
@@ -31,7 +32,6 @@ export function init(ctx) {
   addDiceyRingCharged(ctx);
   addDiceyNecklaceCharged(ctx);
   addSyndicateLetter(ctx);
-  addLockpick(ctx);
   addThiefsRations(ctx);
   addDealersWand(ctx);
   addThrowingCard(ctx);
@@ -530,7 +530,7 @@ function addDiceyRingCharged(ctx) {
       type: "Equipment",
       media: "assets/media/items/thieving/dicey_ring.svg",
       customDescription:
-        "+15 Thieving Stealth when equipped. <br>1-50% extra gold gained on thieving acion.",
+        "+15 Thieving Stealth when equipped. <br>+5% chance to double loot from thieving.",
       ignoreCompletion: false,
       obtainFromItemLog: false,
       goblinRaidExclusive: false,
@@ -545,9 +545,28 @@ function addDiceyRingCharged(ctx) {
           level: 10,
         },
       ],
-      equipmentStats: [],
+      equipmentStats: [
+        {
+          key: "meleeStrengthBonus",
+          value: 2,
+        },
+        {
+          key: "magicAttackBonus",
+          value: 4,
+        },
+        {
+          key: "rangedAttackBonus",
+          value: 4,
+        },
+      ],
       modifiers: {
         increasedThievingStealth: 15,
+        increasedChanceToDoubleItemsSkill: [
+          {
+            skillID: "melvorD:Thieving",
+            value: 5,
+          },
+        ],
       },
     });
   });
@@ -564,7 +583,7 @@ function addDiceyNecklaceCharged(ctx) {
       type: "Equipment",
       media: "assets/media/items/thieving/dicey_necklace.svg",
       customDescription:
-        "+15 Thieving Stealth when equipped. <br>10% chance to avoid being damaged or stunned on Thieving Failure.",
+        "+15 Thieving Stealth when equipped. <br>+5% chance to double loot from combat.",
       ignoreCompletion: false,
       obtainFromItemLog: false,
       goblinRaidExclusive: false,
@@ -579,26 +598,68 @@ function addDiceyNecklaceCharged(ctx) {
           level: 10,
         },
       ],
-      equipmentStats: [],
+      equipmentStats: [
+        {
+          key: "damageReduction",
+          value: 1,
+        },
+        {
+          key: "meleeDefenceBonus",
+          value: 3,
+        },
+        {
+          key: "rangedDefenceBonus",
+          value: 3,
+        },
+        {
+          key: "magicDefenceBonus",
+          value: 3,
+        },
+      ],
       modifiers: {
         increasedThievingStealth: 15,
+        increasedChanceToDoubleLootCombat: 5,
       },
     });
   });
   diceyNecklaceCharged.add();
 }
 
-function addLockpick(ctx) {
-  const lockpick = ctx.gameData.buildPackage((p) => {
+export async function addLockpick(ctx) {
+  const lockpick = await ctx.gameData.buildPackage((p) => {
     p.items.add({
-      itemType: "Item",
+      itemType: "Equipment",
       id: "Lockpick",
       name: "Lockpick",
-      sellsFor: 25,
-      category: "Thieving",
+      sellsFor: 50,
+      category: "Equipment",
       type: "Misc",
-      media: "assets/media/items/thieving/lockpick.svg",
-      customDescription: "Used to break into locked chests.",
+      media: "assets/media/items/thieving/lockpick.png",
+
+      customDescription:
+        "Equip this to break into locked chests in Thieving areas. Consumes on use.",
+      validSlots: ["Consumable"],
+      occupiesSlots: [],
+      equipRequirements: [],
+      equipmentStats: [],
+      modifiers: { lockpick: 1 },
+      consumesOn: [
+        {
+          type: "ThievingAction",
+          succesful: true,
+          npcIDs: [
+            "smattyThieving:WIZARD_CHEST",
+            "smattyThieving:FORT_CHEST",
+            "smattyThieving:OUTSKIRTS_CHEST",
+            "smattyThieving:GIANT_CHEST",
+            "smattyThieving:PORT_CHEST",
+            "smattyThieving:BANQUET_CHEST",
+            "smattyThieving:FARMER_CHEST",
+            "smattyThieving:BANDIT_CHEST",
+            "smattyThieving:GOBLIN_CHEST",
+          ],
+        },
+      ],
     });
   });
   lockpick.add();
@@ -628,7 +689,7 @@ function addThiefsRations(ctx) {
       id: "Thiefs_Rations",
       name: "Thief's Rations",
       customDescription:
-        "On Thieving Failure: Heal for 11% of your Maximum Health.",
+        "On Thieving Failure: Heal for 11% of your Maximum Health.<br><span class='text-danger'>Does not work offline!",
       category: "Combat",
       type: "Equipment",
       media: "assets/media/items/thieving/thiefs_rations.png",
@@ -656,7 +717,7 @@ function addThiefsRations(ctx) {
       id: "Improved_Thiefs_Rations",
       name: "Improved Thief's Rations",
       customDescription:
-        "On Thieving Failure: Heal for 22% of your Maximum Health.",
+        "On Thieving Failure: Heal for 22% of your Maximum Health.<br><span class='text-danger'>Does not work offline!",
       category: "Combat",
       type: "Equipment",
       media: "assets/media/items/thieving/improved_thiefs_rations.png",

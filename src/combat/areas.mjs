@@ -3,8 +3,7 @@ export async function init(ctx) {
   handleAreaDisplayOrder(ctx);
   addDummyArea(ctx);
   addThiefsToAreas();
-  // It's crucial to log after modifications to confirm successful changes.
-  console.log("Updated game object:", game);
+  addSyndicateHideout(ctx);
 }
 
 function addLowTownAlleyways(ctx) {
@@ -29,6 +28,35 @@ function addLowTownAlleyways(ctx) {
     });
   });
   lowTownAllyways.add();
+}
+
+function addSyndicateHideout(ctx) {
+  const syndicateHideout = ctx.gameData.buildPackage((p) => {
+    p.combatAreas.add({
+      id: "SyndicateHideout",
+      name: "Syndicate Hideout",
+      media: "assets/media/areas/syndicate_hideout.png",
+      monsterIDs: [
+        "smattyThieving:SyndicateMelee",
+        "smattyThieving:SyndicateRanged",
+        "smattyThieving:SyndicateMage",
+      ],
+      difficulty: [1, 2],
+      entryRequirements: [
+        {
+          type: "SkillLevel",
+          skillID: "melvorD:Thieving",
+          level: 30,
+        },
+        {
+          type: "ShopPurchase",
+          purchaseID: "smattyThieving:Unlock_Syndicate_Hideout",
+          count: 1,
+        },
+      ],
+    });
+  });
+  syndicateHideout.add();
 }
 
 function addDummyArea(ctx) {
@@ -57,14 +85,21 @@ function handleAreaDisplayOrder(ctx) {
       ids: ["smattyThieving:LowTownAlleyways"],
     });
   });
+  const second_set = ctx.gameData.buildPackage((p) => {
+    p.combatAreaDisplayOrder.add({
+      insertAt: "After",
+      afterID: "smattyThieving:Wizard_Tower",
+      ids: ["smattyThieving:SyndicateHideout"],
+    });
+  });
   first_set.add();
+  second_set.add();
 }
 
 function addThiefsToAreas() {
   const golbinThief = game.combatAreas.registeredObjects
     .get("smattyThieving:DummyArea")
     .monsters.find((monster) => monster._localID === "GolbinThief");
-  console.log("golbinThief:", golbinThief);
   const golbinVillage = game.combatAreas.registeredObjects.get(
     "melvorD:Goblin_Village"
   );

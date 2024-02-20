@@ -1,10 +1,8 @@
 export async function init(ctx) {
-  console.log("initializing thieving modifiers", ctx);
-  console.log("game: ", game);
-  console.log("Item Charges: ", game.itemCharges);
   await patchDiceModifier(ctx);
   addGainStealthAsExtraGPOnThievingAction(ctx);
   await patchThiefsRations(ctx);
+  await patchLockpickModifier(ctx);
 }
 
 async function patchDiceModifier(ctx) {
@@ -24,7 +22,8 @@ async function patchDiceModifier(ctx) {
       let roll = Math.floor(Math.random() * 100) + 1;
       if (roll <= game.combat.player.modifiers.chanceForFlatStealthDamage) {
         const amount = Math.floor(
-          stealthCheckModule.getStealthForCombat() / 10
+          (stealthCheckModule.getStealthForCombat() / 10) *
+            (game.currentGamemode.hitpointMultiplier / 10)
         );
         enemy.damage(amount, Player);
       }
@@ -83,4 +82,13 @@ async function patchThiefsRations(ctx) {
       }, 50);
     }
   });
+}
+
+async function patchLockpickModifier(ctx) {
+  modifierData.lockpick = {
+    description: "You can pick locked chests while this modifier is active.",
+    isSkill: false,
+    isNegative: false,
+    tags: ["thieving"],
+  };
 }

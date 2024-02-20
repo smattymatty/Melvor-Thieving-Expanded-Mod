@@ -46,12 +46,6 @@ async function addSyndicateSpy(ctx) {
                 weight: 10,
               },
               {
-                itemID: "smattyThieving:Lockpick",
-                minQuantity: 1,
-                maxQuantity: 1,
-                weight: 7,
-              },
-              {
                 itemID: "smattyThieving:Syndicate_Insignia",
                 minQuantity: 1,
                 maxQuantity: 1,

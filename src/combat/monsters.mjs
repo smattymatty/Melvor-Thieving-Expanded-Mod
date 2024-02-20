@@ -12,6 +12,7 @@ export async function init(ctx) {
   addGolbinThief(ctx);
   addBanditThief(ctx);
   addGiantThief(ctx);
+  addSyndicateMonsters(ctx);
 }
 
 function addCutpurse(ctx) {
@@ -177,7 +178,7 @@ function addSyndicateLookout(ctx) {
           itemID: "smattyThieving:Lockpick",
           minQuantity: 1,
           maxQuantity: 1,
-          weight: 5,
+          weight: 4,
         },
         {
           itemID: "melvorF:Mithril_Javelin",
@@ -365,6 +366,12 @@ function addGolbinThief(ctx) {
           maxQuantity: 1,
           weight: 5,
         },
+        {
+          itemID: "smattyThieving:Lockpick",
+          minQuantity: 1,
+          maxQuantity: 1,
+          weight: 1,
+        },
       ],
       gpDrops: {
         min: 10,
@@ -431,6 +438,12 @@ function addBanditThief(ctx) {
           minQuantity: 1,
           maxQuantity: 1,
           weight: 5,
+        },
+        {
+          itemID: "smattyThieving:Lockpick",
+          minQuantity: 1,
+          maxQuantity: 1,
+          weight: 2,
         },
       ],
       gpDrops: {
@@ -499,6 +512,12 @@ function addGiantThief(ctx) {
           maxQuantity: 1,
           weight: 5,
         },
+        {
+          itemID: "smattyThieving:Lockpick",
+          minQuantity: 1,
+          maxQuantity: 1,
+          weight: 3,
+        },
       ],
       gpDrops: {
         min: 20,
@@ -514,4 +533,168 @@ function addGiantThief(ctx) {
     });
   });
   giantThief.add();
+}
+
+function addSyndicateMonsters(ctx) {
+  const syndicateMelee = ctx.gameData.buildPackage((p) => {
+    p.monsters.add({
+      id: "SyndicateMelee",
+      name: "Syndicate Melee",
+      media: "assets/media/monsters/syndicate_warrior.png",
+      levels: {
+        Hitpoints: 65,
+        Attack: 50,
+        Strength: 60,
+        Defence: 50,
+        Ranged: 20,
+        Magic: 20,
+      },
+      equipmentStats: [
+        {
+          key: "attackSpeed",
+          value: 3000,
+        },
+      ],
+      ignoreCompletion: false,
+      attackType: "melee",
+      specialAttacks: [],
+      passives: [],
+      lootChance: 100,
+      lootTable: [
+        {
+          itemID: "smattyThieving:Syndicate_Insignia",
+          minQuantity: 1,
+          maxQuantity: 3,
+          weight: 25,
+        },
+        {
+          itemID: "smattyThieving:Lockpick",
+          minQuantity: 1,
+          maxQuantity: 1,
+          weight: 5,
+        },
+      ],
+      gpDrops: {
+        min: 35,
+        max: 160,
+      },
+      canSlayer: true,
+      isBoss: false,
+      selectedSpell: "melvorD:WindStrike",
+      bones: {
+        itemID: "melvorD:Bones",
+        quantity: 1,
+      },
+    });
+  });
+  const syndicateRanged = ctx.gameData.buildPackage((p) => {
+    p.monsters.add({
+      id: "SyndicateRanged",
+      name: "Syndicate Ranged",
+      media: "assets/media/monsters/syndicate_ranger.png",
+      levels: {
+        Hitpoints: 60,
+        Attack: 20,
+        Strength: 20,
+        Defence: 50,
+        Ranged: 60,
+        Magic: 20,
+      },
+      equipmentStats: [
+        {
+          key: "attackSpeed",
+          value: 2800,
+        },
+      ],
+      ignoreCompletion: false,
+      attackType: "ranged",
+      specialAttacks: [],
+      passives: [],
+      lootChance: 100,
+      lootTable: [
+        {
+          itemID: "smattyThieving:Syndicate_Insignia",
+          minQuantity: 1,
+          maxQuantity: 3,
+          weight: 25,
+        },
+        {
+          itemID: "smattyThieving:Lockpick",
+          minQuantity: 1,
+          maxQuantity: 1,
+          weight: 5,
+        },
+      ],
+      gpDrops: {
+        min: 35,
+        max: 160,
+      },
+      canSlayer: true,
+      isBoss: false,
+      selectedSpell: "melvorD:WindStrike",
+      bones: {
+        itemID: "melvorD:Bones",
+        quantity: 1,
+      },
+    });
+  });
+  const syndicateMage = ctx.gameData.buildPackage((p) => {
+    p.monsters.add({
+      id: "SyndicateMage",
+      name: "Syndicate Mage",
+      media: "assets/media/monsters/syndicate_mage.png",
+      levels: {
+        Hitpoints: 55,
+        Attack: 20,
+        Strength: 20,
+        Defence: 40,
+        Ranged: 20,
+        Magic: 70,
+      },
+      equipmentStats: [
+        {
+          key: "attackSpeed",
+          value: 2900,
+        },
+      ],
+      ignoreCompletion: false,
+      attackType: "magic",
+      specialAttacks: [
+        // Consider adding special magic attacks unique to the Syndicate Mage
+      ],
+      passives: [
+        // Add any passive abilities specific to magic users, if applicable
+      ],
+      lootChance: 100,
+      lootTable: [
+        {
+          itemID: "smattyThieving:Syndicate_Insignia",
+          minQuantity: 1,
+          maxQuantity: 3,
+          weight: 25,
+        },
+        {
+          itemID: "smattyThieving:Lockpick",
+          minQuantity: 1,
+          maxQuantity: 1,
+          weight: 5,
+        },
+      ],
+      gpDrops: {
+        min: 40,
+        max: 175,
+      },
+      canSlayer: true,
+      isBoss: false,
+      selectedSpell: "melvorD:FireBlast", // Assuming this mage uses a stronger spell
+      bones: {
+        itemID: "melvorD:Bones",
+        quantity: 1,
+      },
+    });
+    ``;
+  });
+  syndicateMelee.add();
+  syndicateRanged.add();
+  syndicateMage.add();
 }

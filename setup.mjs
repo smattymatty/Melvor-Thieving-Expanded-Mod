@@ -14,10 +14,18 @@ export async function setup(ctx) {
   const thievingModifiersModule = await ctx.loadModule(
     "src/thieving/modifiers.mjs"
   );
+  const thievingChestsModule = await ctx.loadModule(
+    "src/thieving/locked_chests.mjs"
+  );
+  const thievingWarningItemsModule = await ctx.loadModule(
+    "src/thieving/warning_items.mjs"
+  );
   await thievingModifiersModule.init(ctx);
   await thievingSpecialAttacksModule.init(ctx);
   await thievingItemsModule.init(ctx);
   await thievingRecipesModule.init(ctx);
+  await thievingChestsModule.init(ctx);
+  await thievingWarningItemsModule.init(ctx);
   // combat modules
   const combatWarningItemsModule = await ctx.loadModule(
     "src/combat/warning_items.mjs"
@@ -45,6 +53,7 @@ export async function setup(ctx) {
 
   ctx.onModsLoaded(async () => {
     await thievingNPCsModule.init(ctx);
+    await thievingItemsModule.addLockpick(ctx);
     await combatMonstersModule.init(ctx);
     await thievingAreasModule.init(ctx);
     await combatAreasModule.init(ctx);

@@ -36,8 +36,6 @@ async function addStreetSmarts(ctx) {
     const hasStreetsAhead = monster.passives.some(
       (passive) => passive._localID === "StreetsAhead"
     );
-    console.log("Monster Set: ", monster);
-    console.log("speed: ", monstersModule.cutpurseSpeed);
     if (hasStreetSmarts) {
       let monsterSpeed = 0;
       let monsterAttackBonus = 0;

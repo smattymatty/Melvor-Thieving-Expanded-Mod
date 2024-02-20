@@ -46,12 +46,7 @@ async function addCantBeDamagedIfPlayerBelowStealth(ctx) {
   );
   ctx.patch(Player, "attack").before(function (enemy, attack) {
     if (enemy.modifiers.cantBeDamagedIfPlayerBelowStealth > 0) {
-      console.log(
-        "cantBeDamagedIfPlayerBelowStealth",
-        enemy.modifiers.cantBeDamagedIfPlayerBelowStealth
-      );
       const stealth = stealthCheckModule.getStealthForCombat();
-      console.log("Stealth: ", stealth);
       if (stealth < enemy.modifiers.cantBeDamagedIfPlayerBelowStealth) {
         enemy.cantBeDamaged = 1;
         enemy.stats.damageReduction = 100;
