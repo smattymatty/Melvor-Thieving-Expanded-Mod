@@ -5,60 +5,153 @@ export async function init(ctx) {
   addCantBeDamagedIfPlayerBelowStealth(ctx);
 }
 
-function addIncreasedSpeedIfPlayerBelowStealth() {
-  modifierData.increasedSpeedIfPlayerBelowStealth = {
-    description: "If the player is below +${value} stealth, attack 30% faster",
-    isSkill: false,
-    isNegative: false,
-    tags: ["thieving", "combat"],
-  };
+function addIncreasedSpeedIfPlayerBelowStealth(ctx) {
+  const increasedSpeedIfPlayerBelowStealthModifier = new Modifier(
+    game.registeredNamespaces.getNamespace("smattyThieving"),
+    {
+      id: "increasedSpeedIfPlayerBelowStealth",
+      allowEnemy: true,
+      allowedScopes: [
+        {
+          scopes: {},
+          descriptions: [
+            {
+              text: "If the player is below +${value} stealth, attack 30% faster",
+            },
+          ],
+        },
+      ],
+      isSkill: false,
+      allowPositive: true,
+      allowNegative: false,
+      tags: ["thieving", "combat"],
+    },
+    game
+  );
+
+  game.modifierRegistry.registerObject(
+    increasedSpeedIfPlayerBelowStealthModifier
+  );
 }
 
-function addIncreasedAccuracyIfPlayerBelowStealth() {
-  modifierData.increasedAccuracyIfPlayerBelowStealth = {
-    description: "If the player is below +${value} stealth, gain 30% accuracy",
-    isSkill: false,
-    isNegative: false,
-    tags: ["thieving", "combat"],
-  };
+function addIncreasedAccuracyIfPlayerBelowStealth(ctx) {
+  const increasedAccuracyIfPlayerBelowStealthModifier = new Modifier(
+    game.registeredNamespaces.getNamespace("smattyThieving"),
+    {
+      id: "increasedAccuracyIfPlayerBelowStealth",
+      allowEnemy: true,
+      allowedScopes: [
+        {
+          scopes: {},
+          descriptions: [
+            {
+              text: "If the player is below +${value} stealth, gain 30% accuracy",
+            },
+          ],
+        },
+      ],
+      isSkill: false,
+      allowPositive: true,
+      allowNegative: false,
+      tags: ["thieving", "combat"],
+    },
+    game
+  );
+
+  game.modifierRegistry.registerObject(
+    increasedAccuracyIfPlayerBelowStealthModifier
+  );
 }
 
-async function addCantBeDamaged(ctx) {
-  // other effects will check this modifier (e.g dice)
-  modifierData.cantBeDamaged = {
-    description: "Cannot take Damage",
-    isSkill: false,
-    isNegative: false,
-    tags: ["combat"],
-  };
+function addCantBeDamaged(ctx) {
+  const cantBeDamagedModifier = new Modifier(
+    game.registeredNamespaces.getNamespace("smattyThieving"),
+    {
+      id: "cantBeDamaged",
+      allowEnemy: true,
+      allowedScopes: [
+        {
+          scopes: {},
+          descriptions: [
+            {
+              text: "Cannot take Damage",
+            },
+          ],
+        },
+      ],
+      isSkill: false,
+      allowPositive: true,
+      allowNegative: false,
+      tags: ["combat"],
+    },
+    game
+  );
+
+  game.modifierRegistry.registerObject(cantBeDamagedModifier);
 }
 
 async function addCantBeDamagedIfPlayerBelowStealth(ctx) {
-  modifierData.cantBeDamagedIfPlayerBelowStealth = {
-    description:
-      "If the player is below +${value} stealth, set damage reduction to 100%",
-    isSkill: false,
-    isNegative: false,
-    tags: ["thieving", "combat"],
-  };
+  // Create the new Modifier
+  const cantBeDamagedIfPlayerBelowStealthModifier = new Modifier(
+    game.registeredNamespaces.getNamespace("smattyThieving"),
+    {
+      id: "cantBeDamagedIfPlayerBelowStealth",
+      allowEnemy: true,
+      allowedScopes: [
+        {
+          scopes: {},
+          descriptions: [
+            {
+              text: "If the player is below +${value} stealth, set damage reduction to 100%",
+            },
+          ],
+        },
+      ],
+      isSkill: false,
+      allowPositive: true,
+      allowNegative: false,
+      tags: ["thieving", "combat"],
+    },
+    game
+  );
+
+  // Register the new modifier
+  game.modifierRegistry.registerObject(
+    cantBeDamagedIfPlayerBelowStealthModifier
+  );
+
+  // Load the stealth check module
   const stealthCheckModule = await ctx.loadModule(
     "src/helpers/stealth_check.mjs"
   );
+
+  // Patch the Player.attack method
   ctx.patch(Player, "attack").before(function (enemy, attack) {
-    if (enemy.modifiers.cantBeDamagedIfPlayerBelowStealth > 0) {
-      const stealth = stealthCheckModule.getStealthForCombat();
-      if (stealth < enemy.modifiers.cantBeDamagedIfPlayerBelowStealth) {
-        enemy.cantBeDamaged = 1;
-        enemy.stats.damageReduction = 100;
-        game.bank.addItemByID(
-          "smattyThieving:ThiefsInstictWarning",
-          1,
-          false,
-          false,
-          true
-        );
-      } else {
-        enemy.cantBeDamaged = 0;
+    const modValueEntry = enemy.modifiers.entriesByID.get(
+      "smattyThieving:cantBeDamagedIfPlayerBelowStealth"
+    );
+
+    if (modValueEntry && modValueEntry.length > 0) {
+      const actualModValue = modValueEntry[0].modValue.value;
+
+      if (actualModValue > 0) {
+        const stealth = stealthCheckModule.getStealthForCombat();
+        if (stealth < actualModValue) {
+          enemy.cantBeDamaged = 1;
+          // Set damage reduction for all damage types to 100
+          enemy.stats._resistances.forEach((value, key) => {
+            enemy.stats._resistances.set(key, 100);
+          });
+          game.bank.addItemByID(
+            "smattyThieving:ThiefsInstictWarning",
+            1,
+            false,
+            false,
+            true
+          );
+        } else {
+          enemy.cantBeDamaged = 0;
+        }
       }
     }
   });

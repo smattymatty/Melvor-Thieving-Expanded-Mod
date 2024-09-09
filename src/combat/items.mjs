@@ -6,6 +6,8 @@ export async function init(ctx) {
   addMapToShroudLands(ctx);
   addShroudedCape(ctx);
   addShroudedHood(ctx);
+  addSyndicateWeapons(ctx);
+  addSyndicateUpgradeKit(ctx);
 }
 
 function addCutPurse(ctx) {
@@ -32,7 +34,7 @@ function addCutPurse(ctx) {
       name: "Stitched Purse",
       media: "assets/media/items/combat/stitchedpurse.svg",
       customDescription:
-        "+20 Thieving Stealth.<br>On Successful Thieving Action: Gain 1 GP per Stealth against target NPC. <br><span class='text-warning'>Can be upgraded into Bobby's Purse",
+        "+15 Thieving Stealth.<br>On Successful Thieving Action: Gain 1 GP per Stealth against target NPC. <br><span class='text-warning'>Can be upgraded into Bobby's Purse",
       ignoreCompletion: false,
       obtainFromItemLog: false,
       golbinRaidExclusive: false,
@@ -48,7 +50,7 @@ function addCutPurse(ctx) {
       ],
       modifiers: {
         increasedThievingStealth: 20,
-        gainStealthAsExtraGPOnThieving: 1,
+        "smattyThieving:gainStealthAsExtraGPOnThieving": 1,
       },
       equipmentStats: [
         {
@@ -79,7 +81,7 @@ function addCutPurse(ctx) {
       name: "Bobby's Purse",
       media: "assets/media/items/combat/bobbyspurse.svg",
       customDescription:
-        "+30 Thieving Stealth.<br>>On Successful Thieving Action: Gain 2 GP per Stealth against target NPC.",
+        "+20 Thieving Stealth.<br>On Successful Thieving Action: Gain 2 GP per Stealth against target NPC.",
       ignoreCompletion: false,
       obtainFromItemLog: false,
       golbinRaidExclusive: false,
@@ -95,7 +97,7 @@ function addCutPurse(ctx) {
       ],
       modifiers: {
         increasedThievingStealth: 30,
-        gainStealthAsExtraGPOnThieving: 2,
+        "smattyThieving:gainStealthAsExtraGPOnThieving": 2,
       },
       equipmentStats: [
         {
@@ -403,4 +405,183 @@ function addShroudedHood(ctx) {
   });
   shroudedHood.add();
   shroudedGoblinHood.add();
+}
+
+function addSyndicateWeapons(ctx) {
+  const syndicateHammer = ctx.gameData.buildPackage((p) => {
+    p.items.add({
+      type: "Weapon",
+      itemType: "Weapon",
+      category: "Combat",
+      id: "Syndicate_Hammer",
+      name: "Syndicate Hammer",
+      media: "assets/media/items/combat/syndicate_hammer.png",
+      customDescription: "A powerful hammer used by the Syndicate.",
+      ignoreCompletion: false,
+      obtainFromItemLog: false,
+      golbinRaidExclusive: false,
+      sellsFor: 10000,
+      validSlots: ["Weapon"],
+      occupiesSlots: ["Shield"],
+      equipRequirements: [
+        {
+          type: "SkillLevel",
+          skillID: "melvorD:Attack",
+          level: 50,
+        },
+        {
+          type: "SkillLevel",
+          skillID: "melvorD:Thieving",
+          level: 50,
+        },
+      ],
+      equipmentStats: [
+        {
+          key: "attackSpeed",
+          value: 3000,
+        },
+        {
+          key: "stabAttackBonus",
+          value: 55,
+        },
+        {
+          key: "slashAttackBonus",
+          value: 55,
+        },
+        {
+          key: "blockAttackBonus",
+          value: 55,
+        },
+        {
+          key: "meleeStrengthBonus",
+          value: 56,
+        },
+      ],
+    });
+  });
+
+  const syndicateCrossbow = ctx.gameData.buildPackage((p) => {
+    p.items.add({
+      type: "Ranged Weapon",
+      itemType: "Weapon",
+      category: "Combat",
+      id: "Syndicate_Crossbow",
+      name: "Syndicate Crossbow",
+      media: "assets/media/items/combat/syndicate_crossbow.png",
+      customDescription: "A precise crossbow used by the Syndicate.",
+      ignoreCompletion: false,
+      obtainFromItemLog: false,
+      golbinRaidExclusive: false,
+      sellsFor: 10000,
+      validSlots: ["Weapon"],
+      occupiesSlots: ["Shield"],
+      equipRequirements: [
+        {
+          type: "SkillLevel",
+          skillID: "melvorD:Ranged",
+          level: 50,
+        },
+        {
+          type: "SkillLevel",
+          skillID: "melvorD:Thieving",
+          level: 50,
+        },
+      ],
+      equipmentStats: [
+        {
+          key: "attackSpeed",
+          value: 3000,
+        },
+        {
+          key: "rangedAttackBonus",
+          value: 60,
+        },
+        {
+          key: "rangedStrengthBonus",
+          value: 50,
+        },
+      ],
+    });
+  });
+
+  const syndicateOrb = ctx.gameData.buildPackage((p) => {
+    p.items.add({
+      type: "Weapon",
+      itemType: "Weapon",
+      category: "Combat",
+      id: "Syndicate_Orb",
+      name: "Syndicate Orb",
+      media: "assets/media/items/combat/syndicate_orb.png",
+      customDescription: "A mysterious orb used by the Syndicate.",
+      ignoreCompletion: false,
+      obtainFromItemLog: false,
+      golbinRaidExclusive: false,
+      sellsFor: 10000,
+      validSlots: ["Weapon"],
+      occupiesSlots: [],
+      equipRequirements: [
+        {
+          type: "SkillLevel",
+          skillID: "melvorD:Magic",
+          level: 50,
+        },
+        {
+          type: "SkillLevel",
+          skillID: "melvorD:Thieving",
+          level: 50,
+        },
+      ],
+      equipmentStats: [
+        {
+          key: "attackSpeed",
+          value: 3000,
+        },
+        {
+          key: "magicAttackBonus",
+          value: 25,
+        },
+        {
+          key: "magicDamageBonus",
+          value: 22,
+        },
+        {
+          key: "magicDefenceBonus",
+          value: 22,
+        },
+        {
+          key: "meleeDefenceBonus",
+          value: 3,
+        },
+      ],
+    });
+  });
+
+  syndicateHammer.add();
+  syndicateCrossbow.add();
+  syndicateOrb.add();
+}
+
+function addSyndicateUpgradeKit(ctx) {
+  const syndicateUpgradeKit = ctx.gameData.buildPackage((p) => {
+    p.items.add({
+      type: "Misc",
+      itemType: "Item",
+      category: "Combat",
+      id: "Syndicate_Upgrade_Kit",
+      name: "Syndicate Upgrade Kit",
+      media: "assets/media/items/combat/syndicate_upgrade_kit.png",
+      customDescription:
+        "A kit that allows you to upgrade your Syndicate gear.",
+      ignoreCompletion: false,
+      obtainFromItemLog: false,
+      golbinRaidExclusive: false,
+      sellsFor: 10000,
+      validSlots: [""],
+      occupiesSlots: [],
+      equipRequirements: [],
+      equipmentStats: [],
+    });
+  });
+
+  syndicateUpgradeKit.add();
 }

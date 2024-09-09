@@ -43,29 +43,37 @@ export async function addSyndicateSpyToLowTown() {
   }
 }
 
-export async function sortThievingAreasByFirstNpcLevel() {
-  // Sort the thieving areas based on the level of the first NPC in each area
-  const sortedAreas = Array.from(game.thieving.areas.allObjects).sort(
-    (a, b) => {
-      const npcALevel = (a.npcs && a.npcs[0] && a.npcs[0].level) || Infinity;
-      const npcBLevel = (b.npcs && b.npcs[0] && b.npcs[0].level) || Infinity;
-      return npcALevel - npcBLevel;
+function addThievingAreaIDs() {
+  const areaPanels = document.querySelectorAll("thieving-area-panel");
+  areaPanels.forEach((panel, index) => {
+    const nameSpan = panel.querySelector(".block-content span.h5");
+    if (nameSpan && nameSpan.textContent.trim()) {
+      const id = `thieving-area-${nameSpan.textContent
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, "-")}`;
+      panel.id = id;
     }
+  });
+}
+
+function moveGamblingDenAfterLowTown() {
+  const lowTownPanel = document.getElementById("thieving-area-low-town");
+  const gamblingDenPanel = document.getElementById(
+    "thieving-area-gambling-den"
   );
-  // Create a map to store references to the existing DOM nodes for each area
-  const areaPanelMap = new Map();
-  thievingMenu.container.childNodes.forEach((node) => {
-    if (node.id) {
-      // Extract the local ID from the node's ID to match with the area object
-      areaPanelMap.set(node.id, node);
-    }
-  });
-  // Append the area nodes to the container in the sorted order
-  sortedAreas.forEach((area) => {
-    const idKey = `thieving-area-panel-${area._namespace.name}:${area._localID}`;
-    const node = areaPanelMap.get(idKey);
-    if (node) {
-      thievingMenu.container.appendChild(node);
-    }
-  });
+
+  if (lowTownPanel && gamblingDenPanel) {
+    // Insert the Gambling Den panel after the Low Town panel
+    lowTownPanel.parentNode.insertBefore(
+      gamblingDenPanel,
+      lowTownPanel.nextSibling
+    );
+  }
+}
+
+// Initialize mod
+export function initThievingAreaSorter() {
+  addThievingAreaIDs();
+  moveGamblingDenAfterLowTown();
 }

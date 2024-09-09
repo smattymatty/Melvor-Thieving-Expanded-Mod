@@ -20,12 +20,6 @@ export async function setup(ctx) {
   const thievingWarningItemsModule = await ctx.loadModule(
     "src/thieving/warning_items.mjs"
   );
-  await thievingModifiersModule.init(ctx);
-  await thievingSpecialAttacksModule.init(ctx);
-  await thievingItemsModule.init(ctx);
-  await thievingRecipesModule.init(ctx);
-  await thievingChestsModule.init(ctx);
-  await thievingWarningItemsModule.init(ctx);
   // combat modules
   const combatWarningItemsModule = await ctx.loadModule(
     "src/combat/warning_items.mjs"
@@ -38,32 +32,46 @@ export async function setup(ctx) {
   );
   const combatPassivesModule = await ctx.loadModule("src/combat/passives.mjs");
   const combatMonstersModule = await ctx.loadModule("src/combat/monsters.mjs");
+  // shop modules
+  const shopPurchasesModule = await ctx.loadModule("src/shop/purchases.mjs");
+  const shopOrderingModule = await ctx.loadModule("src/shop/ordering.mjs");
+  // ui modules
+  const combatUIModule = await ctx.loadModule("src/combat/ui.mjs");
+
+  await thievingModifiersModule.init(ctx);
+  await thievingSpecialAttacksModule.init(ctx);
+  await thievingItemsModule.init(ctx);
+  await thievingRecipesModule.init(ctx);
+  await thievingChestsModule.init(ctx);
+  await thievingWarningItemsModule.init(ctx);
+
   combatWarningItemsModule.init(ctx);
   await combatModifiersModule.init(ctx);
   await combatItemsModule.init(ctx);
   await combatRecipesModule.init(ctx);
   await combatPassivesModule.init(ctx);
-  // shop modules
-  const shopPurchasesModule = await ctx.loadModule("src/shop/purchases.mjs");
-  const shopOrderingModule = await ctx.loadModule("src/shop/ordering.mjs");
-  await shopPurchasesModule.init(ctx);
-  await shopOrderingModule.init(ctx);
-
   console.log("setup complete", game);
 
   ctx.onModsLoaded(async () => {
+    //shop init
+    await shopPurchasesModule.init(ctx);
+    await shopOrderingModule.init(ctx);
+    //thieving init
     await thievingNPCsModule.init(ctx);
-    await thievingItemsModule.addLockpick(ctx);
-    await combatMonstersModule.init(ctx);
+    await thievingItemsModule.addLockpick(ctx); //needs to be after thievingNPCsModule that adds chests
     await thievingAreasModule.init(ctx);
-    await combatAreasModule.init(ctx);
+    //combat init
+    await combatMonstersModule.init(ctx);
+    await combatAreasModule.init(ctx); //needs to be after ShopPurchasesModule that adds unlocks to areas
   });
 
   ctx.onCharacterSelectionLoaded(async () => {});
 
-  ctx.onCharacterLoaded(async () => {});
+  ctx.onCharacterLoaded(async () => {
+    await combatUIModule.init(ctx);
+  });
 
   ctx.onInterfaceReady(async () => {
-    await thievingAreasModule.sortThievingAreasByFirstNpcLevel();
+    await thievingAreasModule.initThievingAreaSorter();
   });
 }

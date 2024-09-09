@@ -9,7 +9,7 @@ async function addStreetSmarts(ctx) {
       id: "StreetSmarts",
       name: "Street Smarts",
       customDescription:
-        "While the player has below 100 Thieving Stealth, enemy gains 30% increased speed and +30 melee accuracy.<br><span class='text-warning'>Consumes a Thieving Glove Charge on Spawn",
+        "While the player has below 100 Thieving Stealth, enemy gains 30% increased speed and +30 melee accuracy.",
       modifiers: {},
     });
   });
@@ -28,14 +28,17 @@ async function addStreetSmarts(ctx) {
     "src/helpers/stealth_check.mjs"
   );
   const monstersModule = await ctx.loadModule("src/combat/monsters.mjs");
-  ctx.patch(Enemy, "setMonster").before(function (monster) {
+  ctx.patch(Enemy, "setNewMonster").before(function (monster) {
     const stealth = stealthCheckModule.getStealthForCombat();
+
     const hasStreetSmarts = monster.passives.some(
       (passive) => passive._localID === "StreetSmarts"
     );
+
     const hasStreetsAhead = monster.passives.some(
       (passive) => passive._localID === "StreetsAhead"
     );
+    `Streets Ahead: ${hasStreetsAhead}`;
     if (hasStreetSmarts) {
       let monsterSpeed = 0;
       let monsterAttackBonus = 0;
@@ -103,9 +106,9 @@ function addThiefsInstincts(ctx) {
       id: "ThiefsInstinctI",
       name: "Thief's Instinct I",
       customDescription:
-        "While the player has below 20 Thieving Stealth, enemy has 100% damage reduction.<br><span class='text-warning'>Consumes a Thieving Glove Charge when hit",
+        "While the player has below 20 Thieving Stealth, enemy has 100% damage reduction.",
       modifiers: {
-        cantBeDamagedIfPlayerBelowStealth: 20,
+        "smattyThieving:cantBeDamagedIfPlayerBelowStealth": 20,
       },
     });
   });
@@ -114,9 +117,9 @@ function addThiefsInstincts(ctx) {
       id: "ThiefsInstinctII",
       name: "Thief's Instinct II",
       customDescription:
-        "While the player has below 40 Thieving Stealth, enemy has 100% damage reduction.<br><span class='text-warning'>Consumes a Thieving Glove Charge when hit",
+        "While the player has below 40 Thieving Stealth, enemy has 100% damage reduction.",
       modifiers: {
-        cantBeDamagedIfPlayerBelowStealth: 40,
+        "smattyThieving:cantBeDamagedIfPlayerBelowStealth": 40,
       },
     });
   });
@@ -125,9 +128,9 @@ function addThiefsInstincts(ctx) {
       id: "ThiefsInstinctIII",
       name: "Thief's Instincts III",
       customDescription:
-        "While the player has below 60 Thieving Stealth, enemy has 100% damage reduction.<br><span class='text-warning'>Consumes a Thieving Glove Charge when hit",
+        "While the player has below 60 Thieving Stealth, enemy has 100% damage reduction.",
       modifiers: {
-        cantBeDamagedIfPlayerBelowStealth: 60,
+        "smattyThieving:cantBeDamagedIfPlayerBelowStealth": 60,
       },
     });
   });

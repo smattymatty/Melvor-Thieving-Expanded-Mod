@@ -1,9 +1,9 @@
 export async function init(ctx) {
   addLowTownAlleyways(ctx);
+  addSyndicateHideout(ctx);
   handleAreaDisplayOrder(ctx);
   addDummyArea(ctx);
   addThiefsToAreas();
-  addSyndicateHideout(ctx);
 }
 
 function addLowTownAlleyways(ctx) {
@@ -40,6 +40,7 @@ function addSyndicateHideout(ctx) {
         "smattyThieving:SyndicateMelee",
         "smattyThieving:SyndicateRanged",
         "smattyThieving:SyndicateMage",
+        "smattyThieving:SyndicateMaster",
       ],
       difficulty: [1, 2],
       entryRequirements: [
@@ -88,7 +89,7 @@ function handleAreaDisplayOrder(ctx) {
   const second_set = ctx.gameData.buildPackage((p) => {
     p.combatAreaDisplayOrder.add({
       insertAt: "After",
-      afterID: "smattyThieving:Wizard_Tower",
+      afterID: "melvorD:Wizard_Tower",
       ids: ["smattyThieving:SyndicateHideout"],
     });
   });

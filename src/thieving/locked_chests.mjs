@@ -28,7 +28,12 @@ async function addWizardChest(ctx) {
               "assets/media/skills/thieving/locked_chests/locked_wizard_chest.png",
             perception: 700,
             maxHit: 50.0,
-            maxGP: 1300,
+            currencyDrops: [
+              {
+                id: "melvorD:GP",
+                quantity: 1500,
+              },
+            ],
             lootTable: [
               {
                 itemID: "melvorF:Fire_Acolyte_Wizard_Robes",
@@ -120,7 +125,12 @@ async function addFortChest(ctx) {
               "assets/media/skills/thieving/locked_chests/locked_fort_chest.png",
             perception: 650,
             maxHit: 45.0,
-            maxGP: 1150,
+            currencyDrops: [
+              {
+                id: "melvorD:GP",
+                quantity: 1350,
+              },
+            ],
             lootTable: [
               {
                 itemID: "melvorD:Rune_Shield",
@@ -200,7 +210,12 @@ async function addOutskirtsChest(ctx) {
               "assets/media/skills/thieving/locked_chests/locked_outskirts_chest.png",
             perception: 600,
             maxHit: 40.0,
-            maxGP: 1050,
+            currencyDrops: [
+              {
+                id: "melvorD:GP",
+                quantity: 1250,
+              },
+            ],
             lootTable: [
               {
                 itemID: "melvorD:Runite_Ore",
@@ -274,7 +289,12 @@ async function addGiantChest(ctx) {
               "assets/media/skills/thieving/locked_chests/locked_giant_chest.png",
             perception: 550,
             maxHit: 35.0,
-            maxGP: 850,
+            currencyDrops: [
+              {
+                id: "melvorD:GP",
+                quantity: 1050,
+              },
+            ],
             lootTable: [
               {
                 itemID: "melvorD:Runite_Bar",
@@ -348,7 +368,12 @@ async function addPortChest(ctx) {
               "assets/media/skills/thieving/locked_chests/locked_port_chest.png",
             perception: 10000,
             maxHit: 30.0,
-            maxGP: 470,
+            currencyDrops: [
+              {
+                id: "melvorD:GP",
+                quantity: 610,
+              },
+            ],
             lootTable: [
               {
                 itemID: "melvorD:Raw_Shark",
@@ -428,7 +453,12 @@ async function addFarmerChest(ctx) {
               "assets/media/skills/thieving/locked_chests/locked_farmers_chest.png",
             perception: 450,
             maxHit: 25.0,
-            maxGP: 600,
+            currencyDrops: [
+              {
+                id: "melvorD:GP",
+                quantity: 800,
+              },
+            ],
             lootTable: [
               {
                 itemID: "melvorF:Pigtayle_Herb",
@@ -508,7 +538,12 @@ async function addBanquetChest(ctx) {
               "assets/media/skills/thieving/locked_chests/locked_chefs_chest.png",
             perception: 370,
             maxHit: 20.0,
-            maxGP: 500,
+            currencyDrops: [
+              {
+                id: "melvorD:GP",
+                quantity: 700,
+              },
+            ],
             lootTable: [
               {
                 itemID: "melvorD:Anglerfish",
@@ -582,7 +617,12 @@ async function addBanditChest(ctx) {
               "assets/media/skills/thieving/locked_chests/locked_bandit_chest.png",
             perception: 330,
             maxHit: 15.0,
-            maxGP: 400,
+            currencyDrops: [
+              {
+                id: "melvorD:GP",
+                quantity: 600,
+              },
+            ],
             lootTable: [
               {
                 itemID: "melvorD:Rune_Arrows",
@@ -650,7 +690,12 @@ async function addGoblinChest(ctx) {
               "assets/media/skills/thieving/locked_chests/locked_goblin_chest.png",
             perception: 300,
             maxHit: 10.0,
-            maxGP: 300,
+            currencyDrops: [
+              {
+                id: "melvorD:GP",
+                quantity: 500,
+              },
+            ],
             lootTable: [
               {
                 itemID: "melvorD:Gold_Bar",
@@ -780,9 +825,12 @@ async function patchChestsForLockpicks(ctx) {
   ];
 
   ctx.patch(Thieving, "preAction").before(function () {
-    if (chestIDS.includes(game.thieving.currentNPC._localID)) {
-      if (game.combat.player.modifiers.lockpick > 0) {
-      } else {
+    if (chestIDS.includes(this.currentNPC._localID)) {
+      const modValueEntry = game.combat.player.modifiers.entriesByID.get(
+        "smattyThieving:lockpick"
+      );
+      const canPickLock = modValueEntry && modValueEntry.length > 0;
+      if (!canPickLock) {
         // Handle case where player doesn't have lockpicks
         this.stunState = 1;
         game.bank.addItemByID(
@@ -792,8 +840,11 @@ async function patchChestsForLockpicks(ctx) {
           false,
           true
         );
-        return;
+        return false; // Prevent the action
       }
+      // If the player can pick locks, allow the action to proceed
     }
+    // For non-chest NPCs or if the player can pick locks, allow the action
+    return true;
   });
 }

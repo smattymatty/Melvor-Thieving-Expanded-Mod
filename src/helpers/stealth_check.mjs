@@ -1,23 +1,25 @@
-export function getStealthForCombat(consume = true) {
+export function getStealthForCombat() {
   let stealth = game.thieving.level;
-  if (game.thieving.isPoolTierActive(0)) {
-    stealth += 30;
+  stealth += game.combat.player.modifiers.thievingStealth;
+  // Get the current equipment set (assuming it's the first one)
+  const equippedItems = game.combat.player.equipment.equippedItems;
+  // Get the gloves slot
+  const glovesSlot = equippedItems["melvorD:Gloves"];
+  // Check if something is equipped in the gloves slot
+  if (!glovesSlot.isEmpty) {
+    const equippedGloves = glovesSlot.item;
+    // check for a specific pair of gloves
+    if (equippedGloves.id === "melvorF:Thieving_Gloves") {
+      stealth -= 75;
+    }
+  } else {
   }
-  if (game.thieving.isPoolTierActive(3)) {
-    stealth += 100;
-  }
-  stealth += game.combat.player.modifiers.increasedThievingStealth;
-  if (consume === true) {
-    consumeChargeForThievingAttack();
-  }
-  return stealth;
-}
 
-function consumeChargeForThievingAttack() {
-  const entry = [...game.itemCharges.charges].filter(
-    ([item]) => item.localID === "Thieving_Gloves"
-  )[0];
-  if (entry === undefined) return;
-  const [thievingGloves, charges] = entry;
-  if (charges > 0) game.itemCharges.charges.set(thievingGloves, charges - 1);
+  // Update the stealth value on the UI
+  const stealthCombatSpan = document.querySelector("#combat-player-stealth");
+  if (stealthCombatSpan && stealth) {
+    stealthCombatSpan.innerText = stealth;
+  }
+
+  return stealth;
 }

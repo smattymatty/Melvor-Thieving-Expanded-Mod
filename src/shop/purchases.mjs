@@ -66,7 +66,9 @@ function addAreaUnlocks(ctx) {
       buyLimitOverrides: [],
       showBuyLimit: false,
       customName: "Unlock the Syndicate Hideout",
-      customDescription: "Unlock the Syndicate Hideout area",
+      customDescription: `Unlock the Syndicate Hideout area
+        <span class='text-warning'>Not Fully Implemented yet
+        <br>Passives and weapon special attacks coming soon!`,
     });
   });
   const shroudLands = ctx.gameData.buildPackage((p) => {
@@ -111,7 +113,9 @@ function addAreaUnlocks(ctx) {
       buyLimitOverrides: [],
       showBuyLimit: false,
       customName: "Unlock the Shroudlands",
-      customDescription: "Unlock the Shroudlands area",
+      customDescription: `Unlock the Shroudlands area
+        <span class='text-warning'>Not Implemented yet
+        <br>Like, at all!`,
     });
   });
   syndicateHideout.add();

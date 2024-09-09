@@ -1,44 +1,22 @@
 export async function init(ctx) {
-  await addUnluckyStackingEffect(ctx);
   await addGamblersStrike(ctx);
   await addDealersFlush(ctx);
   await addThrowingCardSpecials(ctx);
-}
-
-async function addUnluckyStackingEffect(ctx) {
-  const unluckyStackingEffect = await ctx.gameData.buildPackage((p) => {
-    p.stackingEffects.add({
-      id: "UnluckyMark",
-      stacksToAdd: 1,
-      maxStacks: 100,
-      modifiers: {
-        chanceToTakeStealthDamage: 1,
-      },
-      name: "Unlucky Mark",
-      media: "assets/media/items/thieving/dice.svg",
-      langName: {
-        category: "SPECIAL_ATTACK_NAME",
-        id: "UnluckyMark",
-      },
-    });
-  });
-
-  unluckyStackingEffect.add();
 }
 
 async function addGamblersStrike(ctx) {
   const gamblersStrike = await ctx.gameData.buildPackage((p) => {
     p.attacks.add({
       id: "GamblersStrike",
-      defaultChance: 20,
+      defaultChance: 15,
       damage: [
         {
           damageType: "Custom",
           character: "Attacker",
           maxRoll: "MaxHit",
-          maxPercent: 20,
+          maxPercent: 25,
           minRoll: "MaxHit",
-          minPercent: 1,
+          minPercent: 2,
           roll: true,
         },
       ],
@@ -58,15 +36,15 @@ async function addGamblersStrike(ctx) {
   const eliteGamblersStrike = await ctx.gameData.buildPackage((p) => {
     p.attacks.add({
       id: "EliteGamblersStrike",
-      defaultChance: 20,
+      defaultChance: 15,
       damage: [
         {
           damageType: "Custom",
           character: "Attacker",
           maxRoll: "MaxHit",
-          maxPercent: 22,
+          maxPercent: 33,
           minRoll: "MaxHit",
-          minPercent: 2,
+          minPercent: 3,
           roll: true,
         },
       ],
@@ -83,6 +61,7 @@ async function addGamblersStrike(ctx) {
       usesRunesPerProc: false,
     });
   });
+
   gamblersStrike.add();
   eliteGamblersStrike.add();
 }
@@ -95,13 +74,13 @@ async function addDealersFlush(ctx) {
       damage: [
         {
           damageType: "Normal",
-          amplitude: 100,
+          amplitude: 75,
         },
         {
           damageType: "Custom",
           character: "Attacker",
           maxRoll: "MaxHit",
-          maxPercent: 100,
+          maxPercent: 150,
           minRoll: "MaxHit",
           minPercent: 1,
           roll: true,
@@ -110,11 +89,14 @@ async function addDealersFlush(ctx) {
       prehitEffects: [],
       onhitEffects: [
         {
-          effectType: "Custom",
-          type: "Stun",
-          flavour: "Stun",
-          chance: 20,
-          turns: 1,
+          effectID: "melvorD:Stun",
+          chance: 15,
+          initialParams: [
+            {
+              name: "turns",
+              value: 1,
+            },
+          ],
         },
       ],
       cantMiss: true,
@@ -137,13 +119,13 @@ async function addDealersFlush(ctx) {
       damage: [
         {
           damageType: "Normal",
-          amplitude: 150,
+          amplitude: 125,
         },
         {
           damageType: "Custom",
           character: "Attacker",
           maxRoll: "MaxHit",
-          maxPercent: 200,
+          maxPercent: 250,
           minRoll: "MaxHit",
           minPercent: 2,
           roll: true,
@@ -152,11 +134,14 @@ async function addDealersFlush(ctx) {
       prehitEffects: [],
       onhitEffects: [
         {
-          effectType: "Custom",
-          type: "Stun",
-          flavour: "Stun",
+          effectID: "melvorD:Stun",
           chance: 20,
-          turns: 1,
+          initialParams: [
+            {
+              name: "turns",
+              value: 1,
+            },
+          ],
         },
       ],
       cantMiss: true,
@@ -186,9 +171,9 @@ async function addThrowingCardSpecials(ctx) {
           damageType: "Custom",
           character: "Attacker",
           maxRoll: "MaxHit",
-          maxPercent: 125,
+          maxPercent: 130,
           minRoll: "MaxHit",
-          minPercent: 25,
+          minPercent: 30,
           roll: true,
         },
       ],
@@ -216,9 +201,9 @@ async function addThrowingCardSpecials(ctx) {
           damageType: "Custom",
           character: "Attacker",
           maxRoll: "MaxHit",
-          maxPercent: 130,
+          maxPercent: 150,
           minRoll: "MaxHit",
-          minPercent: 30,
+          minPercent: 50,
           roll: true,
         },
       ],
@@ -247,7 +232,7 @@ async function addThrowingCardSpecials(ctx) {
     ) {
       game.bank.addItemByID(
         "smattyThieving:ThrowingCard",
-        2,
+        1,
         false,
         false,
         true
@@ -259,7 +244,7 @@ async function addThrowingCardSpecials(ctx) {
     ) {
       game.bank.addItemByID(
         "smattyThieving:EliteThrowingCard",
-        3,
+        1,
         false,
         false,
         true

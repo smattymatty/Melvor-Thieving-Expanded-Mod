@@ -57,7 +57,7 @@ function addDice(ctx) {
       occupiesSlots: [],
       equipRequirements: [],
       equipmentStats: [],
-      modifiers: { chanceForFlatStealthDamage: 12 },
+      modifiers: { "smattyThieving:chanceForFlatStealthDamage": 12 },
       consumesOn: [
         {
           type: "PlayerAttack",
@@ -85,7 +85,7 @@ function addDice(ctx) {
       occupiesSlots: [],
       equipRequirements: [],
       equipmentStats: [],
-      modifiers: { chanceForFlatStealthDamage: 20 },
+      modifiers: { "smattyThieving:chanceForFlatStealthDamage": 20 },
       consumesOn: [
         {
           type: "PlayerAttack",
@@ -112,7 +112,7 @@ function addDice(ctx) {
       occupiesSlots: [],
       equipRequirements: [],
       equipmentStats: [],
-      modifiers: { chanceForFlatStealthDamage: 30 },
+      modifiers: { "smattyThieving:chanceForFlatStealthDamage": 30 },
       consumesOn: [
         {
           type: "PlayerAttack",
@@ -139,7 +139,7 @@ function addDice(ctx) {
       occupiesSlots: [],
       equipRequirements: [],
       equipmentStats: [],
-      modifiers: { chanceForFlatStealthDamage: 42 },
+      modifiers: { "smattyThieving:chanceForFlatStealthDamage": 42 },
       consumesOn: [
         {
           type: "PlayerAttack",
@@ -170,25 +170,25 @@ function addBagOfDice(ctx) {
         {
           itemID: "smattyThieving:ShoddyDice",
           minQuantity: 1,
-          maxQuantity: 75,
+          maxQuantity: 50,
           weight: 40,
         },
         {
           itemID: "smattyThieving:PolishedDice",
           minQuantity: 1,
-          maxQuantity: 50,
+          maxQuantity: 25,
           weight: 16,
         },
         {
           itemID: "smattyThieving:ShinyDice",
           minQuantity: 1,
-          maxQuantity: 25,
+          maxQuantity: 10,
           weight: 6,
         },
         {
           itemID: "smattyThieving:MasterDice",
           minQuantity: 1,
-          maxQuantity: 10,
+          maxQuantity: 5,
           weight: 3,
         },
       ],
@@ -642,11 +642,11 @@ export async function addLockpick(ctx) {
       occupiesSlots: [],
       equipRequirements: [],
       equipmentStats: [],
-      modifiers: { lockpick: 1 },
+      modifiers: { "smattyThieving:lockpick": 1 },
       consumesOn: [
         {
           type: "ThievingAction",
-          succesful: true,
+          succesful: false,
           npcIDs: [
             "smattyThieving:WIZARD_CHEST",
             "smattyThieving:FORT_CHEST",
@@ -702,7 +702,7 @@ function addThiefsRations(ctx) {
       occupiesSlots: [],
       equipRequirements: [],
       equipmentStats: [],
-      modifiers: { thiefsRations: 11 },
+      modifiers: { "smattyThieving:thiefsRations": 11 },
       consumesOn: [
         {
           type: "ThievingAction",
@@ -730,7 +730,7 @@ function addThiefsRations(ctx) {
       occupiesSlots: [],
       equipRequirements: [],
       equipmentStats: [],
-      modifiers: { thiefsRations: 22 },
+      modifiers: { "smattyThieving:thiefsRations": 22 },
       consumesOn: [
         {
           type: "ThievingAction",
@@ -895,11 +895,11 @@ function addThrowingCard(ctx) {
         },
         {
           key: "rangedAttackBonus",
-          value: 4,
+          value: 5,
         },
         {
           key: "rangedStrengthBonus",
-          value: 25,
+          value: 26,
         },
       ],
       specialAttacks: ["smattyThieving:TwoOfAKind"],
@@ -945,11 +945,11 @@ function addThrowingCard(ctx) {
         },
         {
           key: "rangedAttackBonus",
-          value: 6,
+          value: 7,
         },
         {
           key: "rangedStrengthBonus",
-          value: 38,
+          value: 40,
         },
       ],
       specialAttacks: ["smattyThieving:ThreeOfAKind"],

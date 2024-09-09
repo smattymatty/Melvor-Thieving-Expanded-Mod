@@ -19,7 +19,12 @@ async function addSyndicateSpy(ctx) {
             media: "assets/media/skills/thieving/syndicate_spy.svg",
             perception: 260,
             maxHit: 7.0,
-            maxGP: 300,
+            currencyDrops: [
+              {
+                id: "melvorD:GP",
+                quantity: 300,
+              },
+            ],
             lootTable: [
               {
                 itemID: "melvorD:Sourweed_Herb",
@@ -78,7 +83,12 @@ async function addGambler(ctx) {
             media: "assets/media/skills/thieving/gambler.svg",
             perception: 160,
             maxHit: 3.6,
-            maxGP: 165,
+            currencyDrops: [
+              {
+                id: "melvorD:GP",
+                quantity: 165,
+              },
+            ],
             lootTable: [
               {
                 itemID: "melvorD:Bronze_Helmet",
@@ -108,13 +118,13 @@ async function addGambler(ctx) {
                 itemID: "smattyThieving:ShoddyDice",
                 minQuantity: 1,
                 maxQuantity: 1,
-                weight: 14,
+                weight: 13,
               },
               {
                 itemID: "smattyThieving:PolishedDice",
                 minQuantity: 1,
                 maxQuantity: 1,
-                weight: 6,
+                weight: 5,
               },
             ],
             uniqueDrop: {
@@ -143,7 +153,12 @@ async function addShadyDealer(ctx) {
             media: "assets/media/skills/thieving/dealer.svg",
             perception: 190,
             maxHit: 4.8,
-            maxGP: 185,
+            currencyDrops: [
+              {
+                id: "melvorD:GP",
+                quantity: 185,
+              },
+            ],
             lootTable: [
               {
                 itemID: "melvorD:Sourweed_Seed",
@@ -191,13 +206,13 @@ async function addShadyDealer(ctx) {
                 itemID: "smattyThieving:ShoddyDice",
                 minQuantity: 1,
                 maxQuantity: 1,
-                weight: 18,
+                weight: 17,
               },
               {
                 itemID: "smattyThieving:PolishedDice",
                 minQuantity: 1,
                 maxQuantity: 1,
-                weight: 10,
+                weight: 9,
               },
             ],
             uniqueDrop: {
@@ -226,7 +241,12 @@ async function addCardShark(ctx) {
             media: "assets/media/skills/thieving/card_shark.svg",
             perception: 240,
             maxHit: 6.9,
-            maxGP: 235,
+            currencyDrops: [
+              {
+                id: "melvorD:GP",
+                quantity: 235,
+              },
+            ],
             lootTable: [
               {
                 itemID: "melvorF:Summoning_Shard_Green",
@@ -262,13 +282,13 @@ async function addCardShark(ctx) {
                 itemID: "smattyThieving:ShoddyDice",
                 minQuantity: 1,
                 maxQuantity: 1,
-                weight: 16,
+                weight: 15,
               },
               {
                 itemID: "smattyThieving:PolishedDice",
                 minQuantity: 1,
                 maxQuantity: 1,
-                weight: 8,
+                weight: 7,
               },
             ],
             uniqueDrop: {
